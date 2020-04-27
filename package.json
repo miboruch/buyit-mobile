@@ -19,6 +19,8 @@
     "react-native-screens": "~2.2.0",
     "react-native-unimodules": "~0.9.0",
     "react-native-web": "~0.11.7",
+    "react-navigation": "^4.3.8",
+    "react-navigation-drawer": "^2.4.12",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"

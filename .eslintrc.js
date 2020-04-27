@@ -22,6 +22,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'no-unused-expressions': 'off',
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'off'
+    'react-hooks/exhaustive-deps': 'off',
+    'no-inferred-any': 'off'
   }
 };

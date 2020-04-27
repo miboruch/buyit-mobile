@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import { Dimensions } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.box}>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
-}
+// @ts-ignore
+import HomeScreen from './src/screens/HomeScreen.js';
+import Sidebar from './src/components/Sidebar.js';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+const DrawerNavigation = createDrawerNavigator(
+  {
+    HomeScreen
   },
-  box: {
-    fontFamily: 'Futura'
+  {
+    contentComponent: (props) => <Sidebar {...props} />
   }
-});
+);
+
+export default createAppContainer(DrawerNavigation);
