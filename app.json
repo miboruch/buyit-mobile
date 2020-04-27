@@ -1,0 +1,17 @@
+{
+  "name": "buyit-mobile",
+  "displayName": "buyit-mobile",
+  "expo": {
+    "name": "buyit-mobile",
+    "slug": "buyit-mobile",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
