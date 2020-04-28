@@ -4,8 +4,7 @@ import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { Dimensions } from 'react-native';
 
-// @ts-ignore
-import HomeScreen from './src/screens/HomeScreen.js';
+import HomeScreen from './src/screens/HomeScreen';
 import Sidebar from './src/components/Sidebar.js';
 
 const DrawerNavigation = createDrawerNavigator(
@@ -13,7 +12,8 @@ const DrawerNavigation = createDrawerNavigator(
     HomeScreen
   },
   {
-    contentComponent: (props) => <Sidebar {...props} />
+    contentComponent: (props) => <Sidebar {...props} />,
+    drawerPosition: 'right'
   }
 );
 

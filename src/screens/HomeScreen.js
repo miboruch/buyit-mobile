@@ -1,23 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import ScreenWrapper from './ScreenWrapper';
+import Screen from './Screen';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
-    <ScreenWrapper>
+    <Screen navigation={navigation}>
       <View style={styles.container}>
-        <Text style={styles.text}>Hello</Text>
+        <Text style={styles.text}>Hello from Home Screen</Text>
       </View>
-    </ScreenWrapper>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   text: {
-    color: '#000'
+    color: '#2d2d2d',
+    fontFamily: 'Futura'
   }
 });
 
