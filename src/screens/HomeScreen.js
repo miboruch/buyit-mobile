@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Screen from './Screen';
+import Button from '../components/Button';
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -8,12 +9,13 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.container}>
         <Text style={styles.text}>Hello from Home Screen</Text>
         <Button
-          title={'Go to products'}
+          text={'Go to products'}
           onPress={() =>
             navigation.navigate('ProductScreen', {
               category: 'electronics'
             })
           }
+          isButtonDark={false}
         >
           Go to products
         </Button>
