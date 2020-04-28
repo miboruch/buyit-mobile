@@ -1,9 +1,12 @@
 import React from 'react';
 import { SafeAreaView, TouchableOpacity, StyleSheet, View, Text } from 'react-native';
+import { colors } from '../styles/theme';
 
-const Screen = ({ navigation, children }) => {
+const Screen = ({ navigation, children, theme = 'dark' }) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, theme === 'dark' ? styles.darkBackground : styles.lightBackground]}
+    >
       <SafeAreaView style={{ flex: 1 }}>
         <TouchableOpacity
           style={{ alignItems: 'flex-start', margin: 16 }}
@@ -21,8 +24,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  darkBackground: {
+    backgroundColor: colors.backgroundDark,
+    color: '#f1f1f1'
+  },
+  lightBackground: {
+    backgroundColor: colors.backgroundLight,
+    color: '#2d2d2d'
+  },
   text: {
-    color: '#2d2d2d',
     fontSize: 20,
     fontFamily: 'Futura'
   },

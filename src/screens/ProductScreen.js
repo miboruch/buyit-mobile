@@ -5,7 +5,7 @@ import Screen from './Screen';
 const ProductScreen = ({ navigation }) => {
   const category = navigation.getParam('category');
   return (
-    <Screen navigation={navigation}>
+    <Screen navigation={navigation} theme={'light'}>
       <View style={styles.container}>
         <Text style={styles.text}>Hello from Product Screen</Text>
         <Text style={styles.text}>Category: {category}</Text>
