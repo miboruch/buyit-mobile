@@ -1,19 +1,33 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { Dimensions } from 'react-native';
 
-// @ts-ignore
-import HomeScreen from './src/screens/HomeScreen.js';
+import HomeScreen from './src/screens/HomeScreen';
+import ProductScreen from './src/screens/ProductScreen';
 import Sidebar from './src/components/Sidebar.js';
 
 const DrawerNavigation = createDrawerNavigator(
   {
-    HomeScreen
+    HomeScreen: {
+      screen: HomeScreen,
+      navigationOptions: {
+        title: 'Home'
+      }
+    },
+    ProductScreen: {
+      screen: ProductScreen,
+      navigationOptions: {
+        title: 'Product'
+      }
+    }
   },
   {
-    contentComponent: (props) => <Sidebar {...props} />
+    contentComponent: (props) => <Sidebar {...props} />,
+    drawerPosition: 'right',
+    drawerBackgroundColor: '#2d2d2d',
+    drawerWidth: Dimensions.get('window').width * 0.85,
+    hideStatusBar: true
   }
 );
 

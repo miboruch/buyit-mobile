@@ -1,23 +1,36 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import ScreenWrapper from './ScreenWrapper';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import Screen from './Screen';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
-    <ScreenWrapper>
+    <Screen navigation={navigation} theme='dark'>
       <View style={styles.container}>
-        <Text style={styles.text}>Hello</Text>
+        <Text style={styles.text}>Hello from Home Screen</Text>
+        <Button
+          title={'Go to products'}
+          onPress={() =>
+            navigation.navigate('ProductScreen', {
+              category: 'electronics'
+            })
+          }
+        >
+          Go to products
+        </Button>
       </View>
-    </ScreenWrapper>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   text: {
-    color: '#000'
+    fontFamily: 'Futura',
+    color: '#f1f1f1'
   }
 });
 

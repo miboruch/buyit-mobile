@@ -1,3 +1,5 @@
+import { StyleSheet } from 'react-native';
+
 export const colors = {
   backgroundDark: 'rgb(12,12,12)',
   backgroundLight: 'rgb(235,235,235)'
@@ -10,5 +12,3 @@ export const fontSize = {
   large: 21,
   extraLarge: 28
 };
-
-
