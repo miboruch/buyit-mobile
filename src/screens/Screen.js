@@ -9,7 +9,7 @@ const Screen = ({ navigation, children, theme = 'dark' }) => {
     >
       <SafeAreaView style={{ flex: 1 }}>
         <TouchableOpacity
-          style={{ alignItems: 'flex-start', margin: 16 }}
+          style={{ alignItems: 'flex-start', margin: 16, width: 130, height: 30 }}
           onPress={navigation.openDrawer}
         >
           <Text>something</Text>
