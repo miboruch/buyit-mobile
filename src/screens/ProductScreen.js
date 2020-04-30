@@ -11,7 +11,7 @@ const ProductScreen = ({ navigation }) => {
   const category = navigation.getParam('category');
   return (
     <Screen navigation={navigation} theme={'dark'}>
-      <Text style={styles.title}>buyIT</Text>
+      <Text style={styles.maintitle}>buyIT</Text>
       <View style={styles.smallButtons}>
         <SmallButton style={styles.smallButtons}/>
         <SmallButton style={styles.smallButtons}/>
@@ -35,8 +35,6 @@ const ProductScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 6,
-    //justifyContent: 'center',
-    //alignItems: 'center'
   },
   text: {
     color: '#c0c5ce',
@@ -52,16 +50,24 @@ const styles = StyleSheet.create({
   button: {
     flex:2,
     alignSelf:'flex-end',
-    padding: 5,
+    padding: 10,
   },
-  title: {
-    color: '#c0c5ce',
+  maintitle: {
+    color: '#868990',
     fontFamily: 'Futura',
     alignSelf: 'center',
     marginLeft: 5,
     fontSize: 30
   },
+  title: {
+    color: '#868990',
+    fontFamily: 'Futura',
+    alignSelf: 'flex-start',
+    marginLeft: 5,
+    fontSize: 30
+  },
   smallButtons: {
+    paddingTop: 10,
     flex:1,
     flexDirection: 'row',
     justifyContent: 'space-around'
