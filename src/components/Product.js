@@ -5,20 +5,13 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 const Product = ({ image, category, name, price }) => {
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: image }} />
-      <View style={styles.contentView}>
-        <Text style={styles.largeContentText}>
-          <Text style={styles.textSpan}>name: </Text>
-          {name}{' '}
-        </Text>
-        <Text style={styles.largeContentText}>
-          <Text style={styles.textSpan}>price: </Text>
-          {price} USD
-        </Text>
-        <Text style={styles.smallContentText}>
-          <Text style={styles.textSpan}>category: </Text>
-          {category}{' '}
-        </Text>
+      <View style={styles.productWrapper}>
+        <Image style={styles.image} source={{ uri: image }} />
+        <View style={styles.contentView}>
+          <Text style={styles.largeContentText}>{name}</Text>
+          <Text style={styles.priceContentText}>{price} $</Text>
+          <Text style={styles.smallContentText}>{category}</Text>
+        </View>
       </View>
     </View>
   );
@@ -28,11 +21,16 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: 400,
-    marginBottom: 70
+    alignItems: 'center',
+    marginBottom: 50
+  },
+  productWrapper: {
+    width: '90%',
+    alignItems: 'center'
   },
   contentView: {
-    marginLeft: 20,
-    marginTop: 10
+    marginTop: 10,
+    alignItems: 'center'
   },
   smallContentText: {
     color: '#c0c5ce',
@@ -44,6 +42,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Futura',
     fontSize: 18,
     letterSpacing: 1
+  },
+  priceContentText: {
+    color: '#c0c5ce',
+    fontFamily: 'Futura',
+    fontSize: 18,
+    fontWeight: '700',
+    letterSpacing: 2
   },
   productPrice: {
     fontSize: 12

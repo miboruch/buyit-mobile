@@ -75,16 +75,15 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   textView: {
-    marginTop: 10,
-    marginBottom: 10,
     width: '90%',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 10
   },
   smallButtonView: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     position: 'absolute',
-    top: -50,
+    top: -60,
     right: 10
   }
 });

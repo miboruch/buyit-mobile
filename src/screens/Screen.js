@@ -8,9 +8,12 @@ const Screen = ({ navigation, children, theme = 'dark' }) => {
       style={[styles.container, theme === 'dark' ? styles.darkBackground : styles.lightBackground]}
     >
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.absoluteView}>
+        <TouchableOpacity
+          style={styles.absoluteView}
+          onPress={() => navigation.navigate('HomeScreen')}
+        >
           <Text style={styles.mainTitle}>buyIT</Text>
-        </View>
+        </TouchableOpacity>
         <TouchableOpacity
           style={{ alignItems: 'flex-start', margin: 16, width: 130, height: 30 }}
           onPress={navigation.openDrawer}
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   mainTitle: {
     color: '#868990',
