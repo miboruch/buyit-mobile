@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1
+    borderWidth: 1,
+    marginBottom: 10
   },
   lightContainer: {
     borderColor: '#fff'

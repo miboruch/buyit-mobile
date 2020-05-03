@@ -11,7 +11,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <Screen navigation={navigation} theme='dark'>
       <View style={styles.container}>
-        <View style={styles.smallButton}>
+        <View style={styles.smallButtonView}>
           <SmallButton />
           <SmallButton />
           <SmallButton />
@@ -80,12 +80,12 @@ const styles = StyleSheet.create({
     width: '90%',
     justifyContent: 'center'
   },
-  smallButton: {
+  smallButtonView: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    position: 'absolute',
     top: -50,
-    right: 10,
-    position: 'absolute'
+    right: 10
   }
 });
 

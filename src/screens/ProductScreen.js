@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import Screen from './Screen';
 import Button from '../components/Button';
 import SmallButton from '../components/SmallButton';
-
+import Product from '../components/Product';
 
 const iphone = require('../assets/images/iphone11.jpg');
 
@@ -11,22 +11,51 @@ const ProductScreen = ({ navigation }) => {
   const category = navigation.getParam('category');
   return (
     <Screen navigation={navigation} theme={'dark'}>
-      <Text style={styles.maintitle}>buyIT</Text>
-      <View style={styles.smallButtons}>
-        <SmallButton style={styles.smallButtons}/>
-        <SmallButton style={styles.smallButtons}/>
-        <SmallButton style={styles.smallButtons}/>
-      </View>
-      <View style={styles.button}>
-        <Button style={styles.button} text={"Input"}/>
-        <Button style={styles.button} text={"Add new product"}/>
-      </View>
       <View style={styles.container}>
-
-        <Text style={styles.title}>Shop/all</Text>
-        <Image style={styles.image} source={iphone} />
-        <Text style={styles.text}>iPhone 11 and 11 pro</Text>
-        <Text style={styles.text}>Category: {category}</Text>
+        <View style={styles.smallButtons}>
+          <SmallButton style={styles.smallButtons} />
+          <SmallButton style={styles.smallButtons} />
+          <SmallButton style={styles.smallButtons} />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button style={styles.topButton} text={'Input'} />
+          <Button text={'Add new product'} />
+        </View>
+        <Text>Shop/{category}</Text>
+        <ScrollView style={styles.scrollView}>
+          <Product
+            image={
+              'https://f00.esfr.pl/foto/6/50065553073/efb45eb2a8f177e6409676e32e1ce251/apple-iphone-pro-11-64gb-zielony,50065553073_7.jpg'
+            }
+            price={1999}
+            category={'electronics'}
+            name={'Iphone 11 pro'}
+          />
+          <Product
+            image={
+              'https://f00.esfr.pl/foto/6/50065553073/efb45eb2a8f177e6409676e32e1ce251/apple-iphone-pro-11-64gb-zielony,50065553073_7.jpg'
+            }
+            price={1999}
+            category={'electronics'}
+            name={'Iphone 11 pro'}
+          />
+          <Product
+            image={
+              'https://f00.esfr.pl/foto/6/50065553073/efb45eb2a8f177e6409676e32e1ce251/apple-iphone-pro-11-64gb-zielony,50065553073_7.jpg'
+            }
+            price={1999}
+            category={'electronics'}
+            name={'Iphone 11 pro'}
+          />
+          <Product
+            image={
+              'https://f00.esfr.pl/foto/6/50065553073/efb45eb2a8f177e6409676e32e1ce251/apple-iphone-pro-11-64gb-zielony,50065553073_7.jpg'
+            }
+            price={1999}
+            category={'electronics'}
+            name={'Iphone 11 pro'}
+          />
+        </ScrollView>
       </View>
     </Screen>
   );
@@ -34,45 +63,21 @@ const ProductScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 6,
+    flex: 1
   },
-  text: {
-    color: '#c0c5ce',
-    fontFamily: 'Futura',
-    alignSelf: 'flex-start',
-    marginLeft: 5,
-    fontSize: 20
-  },
-  image: {
-    width:'100%',
-    height:'40%',
-  },
-  button: {
-    flex:2,
-    alignSelf:'flex-end',
-    padding: 10,
-  },
-  maintitle: {
-    color: '#868990',
-    fontFamily: 'Futura',
-    alignSelf: 'center',
-    marginLeft: 5,
-    fontSize: 30
-  },
-  title: {
-    color: '#868990',
-    fontFamily: 'Futura',
-    alignSelf: 'flex-start',
-    marginLeft: 5,
-    fontSize: 30
+  buttonContainer: {
+    alignSelf: 'flex-end',
+    padding: 10
   },
   smallButtons: {
     paddingTop: 10,
-    flex:1,
     flexDirection: 'row',
     justifyContent: 'space-around'
+  },
+  scrollView: {
+    width: '100%',
+    flex: 6
   }
-
 });
 
 export default ProductScreen;
