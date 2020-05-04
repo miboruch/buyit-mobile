@@ -6,6 +6,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import { registerInputArray } from '../utils/contentArrays';
 import CountrySelect from '../components/CountrySelect';
+import { RegisterSchema } from '../utils/schemaValidation';
 
 const RegisterScreen = ({ navigation }) => {
   return (
@@ -25,6 +26,7 @@ const RegisterScreen = ({ navigation }) => {
             console.log(values);
             resetForm();
           }}
+          validationSchema={RegisterSchema}
         >
           {({ handleChange, handleBlur, handleSubmit, values, errors, setFieldValue }) => {
             const registerInputData = registerInputArray(values, errors);

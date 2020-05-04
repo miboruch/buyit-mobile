@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import Screen from './Screen';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { LoginSchema } from '../utils/schemaValidation';
 
 const LoginScreen = ({ navigation }) => {
   return (
@@ -15,6 +16,7 @@ const LoginScreen = ({ navigation }) => {
             console.log(values);
             resetForm();
           }}
+          validationSchema={LoginSchema}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
             <View style={styles.container}>

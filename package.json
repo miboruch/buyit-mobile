@@ -28,7 +28,8 @@
     "react-navigation-drawer": "^2.4.12",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.28.5"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
