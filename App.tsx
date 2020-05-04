@@ -6,6 +6,7 @@ import { Dimensions } from 'react-native';
 import HomeScreen from './src/screens/HomeScreen';
 import ProductScreen from './src/screens/ProductScreen';
 import Sidebar from './src/components/Sidebar.js';
+import LoginScreen from './src/screens/LoginScreen';
 
 const DrawerNavigation = createDrawerNavigator(
   {
@@ -19,6 +20,12 @@ const DrawerNavigation = createDrawerNavigator(
       screen: ProductScreen,
       navigationOptions: {
         title: 'Product'
+      }
+    },
+    LoginScreen: {
+      screen: LoginScreen,
+      navigationOptions: {
+        title: 'Login'
       }
     }
   },

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { SafeAreaView, TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { colors } from '../styles/theme';
 
@@ -64,5 +65,10 @@ const styles = StyleSheet.create({
     fontSize: 28
   }
 });
+
+Screen.propTypes = {
+  children: PropTypes.node.isRequired,
+  theme: PropTypes.oneOf(['light', 'dark'])
+}
 
 export default Screen;
