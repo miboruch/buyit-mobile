@@ -5,17 +5,25 @@ import Screen from './Screen';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
-const LoginScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation }) => {
   return (
     <Screen navigation={navigation} theme={'light'}>
       <View style={styles.screenContainer}>
         <Formik
-          initialValues={{ email: '', password: '' }}
+          initialValues={{
+            email: '',
+            password: '',
+            name: '',
+            lastName: '',
+            address: '',
+            city: '',
+            country: ''
+          }}
           onSubmit={(values) => console.log(values)}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
             <View style={styles.container}>
-              <Text style={styles.headerText}>Log in</Text>
+              <Text style={styles.headerText}>Register</Text>
               <Input
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
@@ -30,6 +38,31 @@ const LoginScreen = ({ navigation }) => {
                 value={values.password}
                 isSecure={true}
               />
+              <Input
+                onChangeText={handleChange('name')}
+                onBlur={handleBlur('name')}
+                labelText={'First name'}
+                value={values.name}
+              />
+              <Input
+                onChangeText={handleChange('lastName')}
+                onBlur={handleBlur('lastName')}
+                labelText={'Last name'}
+                value={values.lastName}
+              />
+              <Input
+                onChangeText={handleChange('address')}
+                onBlur={handleBlur('address')}
+                labelText={'Address'}
+                value={values.address}
+              />
+              <Input
+                onChangeText={handleChange('city')}
+                onBlur={handleBlur('city')}
+                labelText={'City'}
+                value={values.city}
+              />
+
               <View style={styles.buttonWrapper}>
                 <Button
                   style={{ width: '100%' }}
@@ -74,8 +107,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Futura',
     color: '#2d2d2d',
     position: 'absolute',
-    top: 170
+    top: 50
   }
 });
 
-export default LoginScreen;
+export default RegisterScreen;

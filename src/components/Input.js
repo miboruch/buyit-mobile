@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, View, TextInput, StyleSheet } from 'react-native';
 
-const Input = ({ labelText, onChangeText, onBlur, value, secure }) => {
+const Input = ({ labelText, onChangeText, onBlur, value, isSecure, isEmail }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{labelText}</Text>
@@ -11,7 +11,8 @@ const Input = ({ labelText, onChangeText, onBlur, value, secure }) => {
         onChangeText={onChangeText}
         onBlur={onBlur}
         value={value}
-        secureTextEntry={secure}
+        secureTextEntry={isSecure}
+        keyboardType={isEmail ? 'email-address' : 'default'}
       />
     </View>
   );
@@ -49,11 +50,13 @@ Input.propTypes = {
   onChangeText: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
   value: PropTypes.any,
-  secure: PropTypes.bool
+  isSecure: PropTypes.bool,
+  isEmail: PropTypes.bool
 };
 
 Input.defaultProps = {
-  secure: false
+  isSecure: false,
+  isEmail: false
 };
 
 export default Input;

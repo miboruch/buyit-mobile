@@ -7,6 +7,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import ProductScreen from './src/screens/ProductScreen';
 import Sidebar from './src/components/Sidebar.js';
 import LoginScreen from './src/screens/LoginScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
 
 const DrawerNavigation = createDrawerNavigator(
   {
@@ -27,6 +28,9 @@ const DrawerNavigation = createDrawerNavigator(
       navigationOptions: {
         title: 'Login'
       }
+    },
+    RegisterScreen: {
+      screen: RegisterScreen
     }
   },
   {
