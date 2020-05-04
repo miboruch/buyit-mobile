@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation }) => {
               </Text>
             ))}
           </View>
-          <Button text={'Account'} />
+          <Button text={'Account'} onPress={() => navigation.navigate('LoginScreen')} />
         </View>
       </View>
     </Screen>

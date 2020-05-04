@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "countries-list": "^2.5.4",
     "expo": "~37.0.3",
     "expo-updates": "~0.1.0",
+    "formik": "^2.1.4",
     "prop-types": "^15.7.2",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
@@ -26,7 +28,8 @@
     "react-navigation-drawer": "^2.4.12",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.28.5"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
