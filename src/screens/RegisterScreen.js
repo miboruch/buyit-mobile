@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Picker } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import Screen from './Screen';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { registerInputArray } from '../utils/contentArrays';
+import CountrySelect from '../components/CountrySelect';
 
 const RegisterScreen = ({ navigation }) => {
   return (
@@ -20,15 +21,19 @@ const RegisterScreen = ({ navigation }) => {
             city: '',
             country: ''
           }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values, { resetForm }) => {
+            console.log(values);
+            resetForm();
+          }}
         >
-          {({ handleChange, handleBlur, handleSubmit, values, errors }) => {
+          {({ handleChange, handleBlur, handleSubmit, values, errors, setFieldValue }) => {
             const registerInputData = registerInputArray(values, errors);
             return (
               <View style={styles.container}>
                 <Text style={styles.headerText}>Register</Text>
                 {registerInputData.map((item) => (
                   <Input
+                    key={item.name}
                     onChangeText={handleChange(item.name)}
                     onBlur={handleBlur(item.name)}
                     labelText={item.labelText}
@@ -37,10 +42,12 @@ const RegisterScreen = ({ navigation }) => {
                     isSecure={item.isSecure}
                   />
                 ))}
-                <Picker style={styles.picker}>
-                  <Picker.Item label={'Poland'} value={'poland'} />
-                  <Picker.Item label={'England'} value={'england'} />
-                </Picker>
+                <CountrySelect
+                  handleChange={handleChange}
+                  setFieldValue={setFieldValue}
+                  labelText={'Country'}
+                  formFieldName={'country'}
+                />
                 <View style={styles.buttonWrapper}>
                   <Button
                     style={{ width: '100%' }}

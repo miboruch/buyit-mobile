@@ -11,7 +11,10 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.screenContainer}>
         <Formik
           initialValues={{ email: '', password: '' }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values, { resetForm }) => {
+            console.log(values);
+            resetForm();
+          }}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
             <View style={styles.container}>

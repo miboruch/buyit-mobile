@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "countries-list": "^2.5.4",
     "expo": "~37.0.3",
     "expo-updates": "~0.1.0",
     "formik": "^2.1.4",
