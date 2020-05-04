@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import Screen from './Screen';
 import Input from '../components/Input';
@@ -37,6 +37,9 @@ const LoginScreen = ({ navigation }) => {
                   onPress={handleSubmit}
                   isButtonDark={true}
                 />
+                <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+                  <Text style={styles.registerText}>or register</Text>
+                </TouchableOpacity>
               </View>
             </View>
           )}
@@ -75,6 +78,12 @@ const styles = StyleSheet.create({
     color: '#2d2d2d',
     position: 'absolute',
     top: 170
+  },
+  registerText: {
+    fontFamily: 'Futura',
+    fontSize: 13,
+    color: '#2d2d2d',
+    letterSpacing: 1
   }
 });
 

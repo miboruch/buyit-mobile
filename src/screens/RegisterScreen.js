@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Picker } from 'react-native';
 import { Formik } from 'formik';
 import Screen from './Screen';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { registerInputArray } from '../utils/contentArrays';
 
 const RegisterScreen = ({ navigation }) => {
   return (
@@ -21,58 +22,39 @@ const RegisterScreen = ({ navigation }) => {
           }}
           onSubmit={(values) => console.log(values)}
         >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
-            <View style={styles.container}>
-              <Text style={styles.headerText}>Register</Text>
-              <Input
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                labelText={'Email'}
-                value={values.email}
-                isEmail={true}
-              />
-              <Input
-                onChangeText={handleChange('password')}
-                onBlur={handleBlur('password')}
-                labelText={'Password'}
-                value={values.password}
-                isSecure={true}
-              />
-              <Input
-                onChangeText={handleChange('name')}
-                onBlur={handleBlur('name')}
-                labelText={'First name'}
-                value={values.name}
-              />
-              <Input
-                onChangeText={handleChange('lastName')}
-                onBlur={handleBlur('lastName')}
-                labelText={'Last name'}
-                value={values.lastName}
-              />
-              <Input
-                onChangeText={handleChange('address')}
-                onBlur={handleBlur('address')}
-                labelText={'Address'}
-                value={values.address}
-              />
-              <Input
-                onChangeText={handleChange('city')}
-                onBlur={handleBlur('city')}
-                labelText={'City'}
-                value={values.city}
-              />
-
-              <View style={styles.buttonWrapper}>
-                <Button
-                  style={{ width: '100%' }}
-                  text={'Submit'}
-                  onPress={handleSubmit}
-                  isButtonDark={true}
-                />
+          {({ handleChange, handleBlur, handleSubmit, values, errors }) => {
+            const registerInputData = registerInputArray(values, errors);
+            return (
+              <View style={styles.container}>
+                <Text style={styles.headerText}>Register</Text>
+                {registerInputData.map((item) => (
+                  <Input
+                    onChangeText={handleChange(item.name)}
+                    onBlur={handleBlur(item.name)}
+                    labelText={item.labelText}
+                    value={item.value}
+                    isEmail={item.isEmail}
+                    isSecure={item.isSecure}
+                  />
+                ))}
+                <Picker style={styles.picker}>
+                  <Picker.Item label={'Poland'} value={'poland'} />
+                  <Picker.Item label={'England'} value={'england'} />
+                </Picker>
+                <View style={styles.buttonWrapper}>
+                  <Button
+                    style={{ width: '100%' }}
+                    text={'Submit'}
+                    onPress={handleSubmit}
+                    isButtonDark={true}
+                  />
+                  <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+                    <Text style={styles.loginText}>or log in</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          )}
+            );
+          }}
         </Formik>
       </View>
     </Screen>
@@ -107,7 +89,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Futura',
     color: '#2d2d2d',
     position: 'absolute',
-    top: 50
+    top: 10
+  },
+  loginText: {
+    fontFamily: 'Futura',
+    fontSize: 13,
+    color: '#2d2d2d',
+    letterSpacing: 1
+  },
+  picker: {
+    width: 200,
+    height: 40,
+    alignItems: 'center'
   }
 });
 
