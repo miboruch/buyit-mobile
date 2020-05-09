@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { Dimensions } from 'react-native';
+import { Provider } from 'react-redux';
+import store from './src/store';
 
 import HomeScreen from './src/screens/HomeScreen';
 import ProductScreen from './src/screens/ProductScreen';
@@ -42,4 +44,12 @@ const DrawerNavigation = createDrawerNavigator(
   }
 );
 
-export default createAppContainer(DrawerNavigation);
+const AppContainer = createAppContainer(DrawerNavigation);
+
+const App = () => (
+  <Provider store={store}>
+    <AppContainer />
+  </Provider>
+);
+
+export default App;

@@ -1,12 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
+import { connect } from 'react-redux';
 import Screen from './Screen';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { LoginSchema } from '../utils/schemaValidation';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation, isLoggedIn }) => {
+  console.log(isLoggedIn);
   return (
     <Screen navigation={navigation} theme={'light'}>
       <View style={styles.screenContainer}>
@@ -92,4 +94,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginScreen;
+const mapStateToProps = ({ authenticationReducer: { isLoggedIn } }) => {
+  return { isLoggedIn };
+};
+
+export default connect(mapStateToProps)(LoginScreen);
