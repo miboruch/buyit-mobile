@@ -2,28 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SafeAreaView, TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { colors } from '../styles/theme';
+import { Provider } from 'react-redux';
+import store from '../store';
 
 const Screen = ({ navigation, children, theme = 'dark' }) => {
   return (
-    <View
-      style={[styles.container, theme === 'dark' ? styles.darkBackground : styles.lightBackground]}
-    >
-      <SafeAreaView style={{ flex: 1 }}>
-        <TouchableOpacity
-          style={styles.absoluteView}
-          onPress={() => navigation.navigate('HomeScreen')}
-        >
-          <Text style={styles.mainTitle}>buyIT</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ alignItems: 'flex-start', margin: 16, width: 130, height: 30 }}
-          onPress={navigation.openDrawer}
-        >
-          <Text>something</Text>
-        </TouchableOpacity>
-        {children}
-      </SafeAreaView>
-    </View>
+    <Provider store={store}>
+      <View
+        style={[
+          styles.container,
+          theme === 'dark' ? styles.darkBackground : styles.lightBackground
+        ]}
+      >
+        <SafeAreaView style={{ flex: 1 }}>
+          <TouchableOpacity
+            style={styles.absoluteView}
+            onPress={() => navigation.navigate('HomeScreen')}
+          >
+            <Text style={styles.mainTitle}>buyIT</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ alignItems: 'flex-start', margin: 16, width: 130, height: 30 }}
+            onPress={navigation.openDrawer}
+          >
+            <Text>something</Text>
+          </TouchableOpacity>
+          {children}
+        </SafeAreaView>
+      </View>
+    </Provider>
   );
 };
 
@@ -69,6 +76,6 @@ const styles = StyleSheet.create({
 Screen.propTypes = {
   children: PropTypes.node.isRequired,
   theme: PropTypes.oneOf(['light', 'dark'])
-}
+};
 
 export default Screen;
