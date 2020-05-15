@@ -25,7 +25,7 @@ const HomeScreen = ({ navigation }) => {
             text={'Go to products'}
             onPress={() =>
               navigation.navigate('ProductScreen', {
-                category: 'electronics'
+                category: 'all'
               })
             }
             isButtonDark={false}

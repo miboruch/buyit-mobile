@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Screen from './Screen';
 import Button from '../components/Button';
 import Product from '../components/Product';
+import { fetchAllProducts } from '../actions/productActions';
 
-const ProductsScreen = ({ navigation }) => {
+const ProductsScreen = ({ navigation, getAllProducts }) => {
   const category = navigation.getParam('category');
-  console.log('hello');
+
+  useEffect(() => {
+    getAllProducts(category, 1);
+  }, []);
+
   return (
     <Screen navigation={navigation} theme={'dark'}>
       <View style={styles.container}>
@@ -53,4 +58,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ProductsScreen;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAllProducts: (category, page) => dispatch(fetchAllProducts(category, page))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ProductsScreen);
