@@ -1,37 +1,21 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import Screen from './Screen';
-import Button from '../components/Button';
-import Product from '../components/Product';
 
-const ProductScreen = ({ navigation }) => {
-  const category = navigation.getParam('category');
+const ProductScreen = ({ route, navigation }) => {
+  const { product } = route.params;
+
   return (
-    <Screen navigation={navigation} theme={'dark'}>
+    <Screen>
       <View style={styles.container}>
-        <View style={styles.buttonContainer}>
-          <Button style={styles.topButton} text={'Input'} />
-          <Button text={'Add new product'} />
+        <View style={styles.productWrapper}>
+          <Image style={styles.image} source={{ uri: product.image }} />
+          <View style={styles.contentView}>
+            <Text style={styles.largeContentText}>{product.name}</Text>
+            <Text style={styles.priceContentText}>{product.price} $</Text>
+            <Text style={styles.smallContentText}>{product.category}</Text>
+          </View>
         </View>
-        <Text>Shop/{category}</Text>
-        <ScrollView style={styles.scrollView}>
-          <Product
-            image={
-              'https://f00.esfr.pl/foto/6/50065553073/efb45eb2a8f177e6409676e32e1ce251/apple-iphone-pro-11-64gb-zielony,50065553073_7.jpg'
-            }
-            price={1999}
-            category={'electronics'}
-            name={'Iphone 11 pro'}
-          />
-          <Product
-            image={
-              'https://f00.esfr.pl/foto/6/50065553073/efb45eb2a8f177e6409676e32e1ce251/apple-iphone-pro-11-64gb-zielony,50065553073_7.jpg'
-            }
-            price={1999}
-            category={'electronics'}
-            name={'Iphone 11 pro'}
-          />
-        </ScrollView>
       </View>
     </Screen>
   );
@@ -39,15 +23,39 @@ const ProductScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  buttonContainer: {
-    alignSelf: 'flex-end',
-    padding: 10
-  },
-  scrollView: {
     width: '100%',
-    flex: 6
+    alignItems: 'center',
+    marginBottom: 50
+  },
+  productWrapper: {
+    width: '90%',
+    alignItems: 'center'
+  },
+  contentView: {
+    marginTop: 10,
+    alignItems: 'center'
+  },
+  smallContentText: {
+    color: '#c0c5ce',
+    fontFamily: 'Futura',
+    fontSize: 14
+  },
+  largeContentText: {
+    color: '#c0c5ce',
+    fontFamily: 'Futura',
+    fontSize: 18,
+    letterSpacing: 1
+  },
+  priceContentText: {
+    color: '#c0c5ce',
+    fontFamily: 'Futura',
+    fontSize: 18,
+    fontWeight: '700',
+    letterSpacing: 2
+  },
+  image: {
+    width: '100%',
+    height: '80%'
   }
 });
 

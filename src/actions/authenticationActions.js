@@ -10,10 +10,40 @@ import {
   UPDATE_SUCCESS,
   UPDATE_FAILURE
 } from '../reducers/authenticationReducer';
-import { API_URL } from '../utils/constants';
-import { resetCart } from './cartAction';
-import { fetchUserOrders } from './orderAction';
-import { fetchAllUserProducts } from './productAction';
+import { API_URL } from '../utils/helpers';
+import { AsyncStorage } from 'react-native';
+// import { resetCart } from './cartAction';
+// import { fetchUserOrders } from './orderAction';
+// import { fetchAllUserProducts } from './productAction';
+
+const setAuthItems = async (userID, token) => {
+  try {
+    await AsyncStorage.setItem('userID', userID);
+    await AsyncStorage.setItem('token', token);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getAuthItems = async () => {
+  try {
+    const userID = await AsyncStorage.getItem('userID');
+    const token = await AsyncStorage.getItem('token');
+
+    return { userID, token };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const removeAuthItems = async () => {
+  try {
+    await AsyncStorage.removeItem('userID');
+    await AsyncStorage.removeItem('token');
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const authStart = () => {
   return {
@@ -31,7 +61,7 @@ export const authSuccess = (token, userID) => {
   };
 };
 
-const authLoginFailure = error => {
+const authLoginFailure = (error) => {
   return {
     type: AUTH_LOGIN_FAILURE,
     payload: {
@@ -40,7 +70,7 @@ const authLoginFailure = error => {
   };
 };
 
-const authRegisterFailure = error => {
+const authRegisterFailure = (error) => {
   return {
     type: AUTH_REGISTER_FAILURE,
     payload: {
@@ -49,14 +79,14 @@ const authRegisterFailure = error => {
   };
 };
 
-export const userInfoSuccess = userInfo => {
+export const userInfoSuccess = (userInfo) => {
   return {
     type: GET_USER_INFO,
     payload: userInfo
   };
 };
 
-export const userInfoError = error => {
+export const userInfoError = (error) => {
   return {
     type: GET_USER_INFO_ERROR,
     payload: error
@@ -69,14 +99,14 @@ const updateSuccess = () => {
   };
 };
 
-const updateFailure = error => {
+const updateFailure = (error) => {
   return {
     type: UPDATE_FAILURE,
     payload: error
   };
 };
 
-export const getUserInfo = token => async dispatch => {
+export const getUserInfo = (token) => async (dispatch) => {
   dispatch(authStart());
   try {
     const { data } = await axios.get(`${API_URL}/user/information`, {
@@ -95,24 +125,25 @@ const logout = () => {
   };
 };
 
-export const authLogout = () => dispatch => {
+export const authLogout = () => async (dispatch) => {
   dispatch(authStart());
 
-  resetCart();
+  await removeAuthItems();
+  // resetCart();
   dispatch(logout());
 };
 
-export const userLogin = (email, password, history) => async dispatch => {
+export const userLogin = (email, password, history) => async (dispatch) => {
   dispatch(authStart());
 
   try {
     const { data } = await axios.post(`${API_URL}/user/login`, { email, password });
     dispatch(authSuccess(data.token, data.id));
     dispatch(getUserInfo(data.token));
-    dispatch(fetchUserOrders(data.token));
-    dispatch(fetchAllUserProducts(data.token));
+    // dispatch(fetchUserOrders(data.token));
+    // dispatch(fetchAllUserProducts(data.token));
+    await setAuthItems(data.id, data.token);
     history.push('/');
-
   } catch (error) {
     dispatch(authLoginFailure(error));
   }
@@ -127,7 +158,7 @@ export const userRegister = (
   address,
   country,
   history
-) => async dispatch => {
+) => async (dispatch) => {
   dispatch(authStart());
 
   try {
@@ -141,6 +172,7 @@ export const userRegister = (
       country
     });
 
+    await setAuthItems(data._doc._id, data.token);
     dispatch(authSuccess(data.token, data._doc._id));
     history.push('/');
   } catch (error) {
@@ -148,17 +180,17 @@ export const userRegister = (
   }
 };
 
-export const authenticationCheck = () => async dispatch => {
-
-  if (token && userID) {
+export const authenticationCheck = () => async (dispatch) => {
+  const { userID, token } = await getAuthItems();
+  if (userID && token) {
     dispatch(authSuccess(token, userID));
     dispatch(getUserInfo(token));
-    dispatch(fetchUserOrders(token));
-    dispatch(fetchAllUserProducts(token));
+    // dispatch(fetchUserOrders(token));
+    // dispatch(fetchAllUserProducts(token));
   }
 };
 
-export const userUpdate = (name, lastName, city, address, country, token) => async dispatch => {
+export const userUpdate = (name, lastName, city, address, country, token) => async (dispatch) => {
   dispatch(authStart());
   try {
     await axios.put(

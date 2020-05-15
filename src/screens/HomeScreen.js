@@ -3,9 +3,9 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import Screen from './Screen';
 import Button from '../components/Button';
 import SmallButton from '../components/SmallButton';
-import { instruction } from '../utils/instruction';
+import logo from '../assets/images/main_logo.jpg';
 
-const logo = require('../assets/images/main_logo.jpg');
+import { instruction } from '../utils/instruction';
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -23,9 +23,14 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.contentView}>
           <Button
             text={'Go to products'}
+            // onPress={() =>
+            //   navigation.navigate('ProductScreen', {
+            //     category: 'all'
+            //   })
+            // }
             onPress={() =>
-              navigation.navigate('ProductScreen', {
-                category: 'electronics'
+              navigation.navigate('Products', {
+                category: 'all'
               })
             }
             isButtonDark={false}
@@ -37,7 +42,7 @@ const HomeScreen = ({ navigation }) => {
               </Text>
             ))}
           </View>
-          <Button text={'Account'} onPress={() => navigation.navigate('LoginScreen')} />
+          <Button text={'Account'} onPress={() => navigation.navigate('Login')} />
         </View>
       </View>
     </Screen>

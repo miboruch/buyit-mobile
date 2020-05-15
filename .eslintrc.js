@@ -23,6 +23,8 @@ module.exports = {
     'no-unused-expressions': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'off',
-    'no-inferred-any': 'off'
+    'no-inferred-any': 'off',
+    'no-unused-labels': 'off',
+    'react/prop-types': 'off'
   }
 };
