@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import {connect} from 'react-redux';
 import Screen from './Screen';
 import Button from '../components/Button';
 import Product from '../components/Product';
 
-const ProductScreen = ({ navigation }) => {
+const ProductsScreen = ({ navigation }) => {
   const category = navigation.getParam('category');
   return (
     <Screen navigation={navigation} theme={'dark'}>
@@ -51,4 +52,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ProductScreen;
+export default ProductsScreen;

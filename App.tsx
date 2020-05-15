@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import store from './src/store';
 
 import HomeScreen from './src/screens/HomeScreen';
-import ProductScreen from './src/screens/ProductScreen';
+import ProductsScreen from './src/screens/ProductsScreen';
 import Sidebar from './src/components/Sidebar.js';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
@@ -20,7 +20,7 @@ const DrawerNavigation = createDrawerNavigator(
       }
     },
     ProductScreen: {
-      screen: ProductScreen,
+      screen: ProductsScreen,
       navigationOptions: {
         title: 'Product'
       }
@@ -32,7 +32,10 @@ const DrawerNavigation = createDrawerNavigator(
       }
     },
     RegisterScreen: {
-      screen: RegisterScreen
+      screen: RegisterScreen,
+      navigationOptions: {
+        title: 'Register'
+      }
     }
   },
   {
