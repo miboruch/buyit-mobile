@@ -6,7 +6,7 @@ import Button from '../components/Button';
 import Product from '../components/Product';
 import { fetchAllProducts } from '../actions/productActions';
 
-const ProductsScreen = ({ navigation, getAllProducts }) => {
+const ProductsScreen = ({ navigation, getAllProducts, loading, products }) => {
   const category = navigation.getParam('category');
 
   useEffect(() => {
@@ -15,31 +15,28 @@ const ProductsScreen = ({ navigation, getAllProducts }) => {
 
   return (
     <Screen navigation={navigation} theme={'dark'}>
-      <View style={styles.container}>
-        <View style={styles.buttonContainer}>
-          <Button style={styles.topButton} text={'Input'} />
-          <Button text={'Add new product'} />
+      {loading ? (
+        <Text>Loading</Text>
+      ) : (
+        <View style={styles.container}>
+          <View style={styles.buttonContainer}>
+            <Button text={'Input'} />
+            <Button text={'Add new product'} />
+          </View>
+          <Text>Shop/{category}</Text>
+          <ScrollView style={styles.scrollView}>
+            {products.map((product) => (
+              <Product
+                key={product._id}
+                image={product.image}
+                price={product.price}
+                category={product.category}
+                name={product.name}
+              />
+            ))}
+          </ScrollView>
         </View>
-        <Text>Shop/{category}</Text>
-        <ScrollView style={styles.scrollView}>
-          <Product
-            image={
-              'https://f00.esfr.pl/foto/6/50065553073/efb45eb2a8f177e6409676e32e1ce251/apple-iphone-pro-11-64gb-zielony,50065553073_7.jpg'
-            }
-            price={1999}
-            category={'electronics'}
-            name={'Iphone 11 pro'}
-          />
-          <Product
-            image={
-              'https://f00.esfr.pl/foto/6/50065553073/efb45eb2a8f177e6409676e32e1ce251/apple-iphone-pro-11-64gb-zielony,50065553073_7.jpg'
-            }
-            price={1999}
-            category={'electronics'}
-            name={'Iphone 11 pro'}
-          />
-        </ScrollView>
-      </View>
+      )}
     </Screen>
   );
 };
@@ -58,10 +55,14 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = ({ productReducer: { loading, products } }) => {
+  return { loading, products };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     getAllProducts: (category, page) => dispatch(fetchAllProducts(category, page))
   };
 };
 
-export default connect(null, mapDispatchToProps)(ProductsScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsScreen);

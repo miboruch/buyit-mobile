@@ -24,6 +24,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'off',
     'no-inferred-any': 'off',
-    'no-unused-labels': 'off'
+    'no-unused-labels': 'off',
+    'react/prop-types': 'off'
   }
 };
