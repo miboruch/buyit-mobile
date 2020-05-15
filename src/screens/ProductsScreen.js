@@ -7,10 +7,8 @@ import Product from '../components/Product';
 import { fetchAllProducts } from '../actions/productActions';
 
 const ProductsScreen = ({ route, navigation, getAllProducts, loading, products }) => {
-  // const { category } = route.params;
-
   useEffect(() => {
-    !products && getAllProducts('all', 1);
+    products.length === 0 && getAllProducts('all', 1);
   }, []);
 
   return (
@@ -27,9 +25,11 @@ const ProductsScreen = ({ route, navigation, getAllProducts, loading, products }
           <ScrollView style={styles.scrollView}>
             {products.map((product) => (
               <Product
-                onPress={navigation.navigate('Product', {
-                  id: 12
-                })}
+                onPress={() =>
+                  navigation.navigate('Product', {
+                    product
+                  })
+                }
                 key={product._id}
                 image={product.image}
                 price={product.price}

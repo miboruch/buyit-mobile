@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 const Product = ({ image, category, name, price, onPress }) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={() => onPress}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.productWrapper}>
         <Image style={styles.image} source={{ uri: image }} />
         <View style={styles.contentView}>
