@@ -6,27 +6,30 @@ import Button from '../components/Button';
 import Product from '../components/Product';
 import { fetchAllProducts } from '../actions/productActions';
 
-const ProductsScreen = ({ navigation, getAllProducts, loading, products }) => {
-  const category = navigation.getParam('category');
+const ProductsScreen = ({ route, navigation, getAllProducts, loading, products }) => {
+  // const { category } = route.params;
 
   useEffect(() => {
-    getAllProducts(category, 1);
+    !products && getAllProducts('all', 1);
   }, []);
 
   return (
     <Screen navigation={navigation} theme={'dark'}>
       {loading ? (
-        <Text>Loading</Text>
+        <Text style={styles.loadingText}>Loading</Text>
       ) : (
         <View style={styles.container}>
           <View style={styles.buttonContainer}>
             <Button text={'Input'} />
-            <Button text={'Add new product'} />
+            <Button text={'Add new product'} onPress={() => navigation.navigate('Product')} />
           </View>
-          <Text>Shop/{category}</Text>
+          <Text>Shop/all</Text>
           <ScrollView style={styles.scrollView}>
             {products.map((product) => (
               <Product
+                onPress={navigation.navigate('Product', {
+                  id: 12
+                })}
                 key={product._id}
                 image={product.image}
                 price={product.price}
@@ -52,6 +55,11 @@ const styles = StyleSheet.create({
   scrollView: {
     width: '100%',
     flex: 6
+  },
+  loadingText: {
+    color: '#f3f3f3',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 

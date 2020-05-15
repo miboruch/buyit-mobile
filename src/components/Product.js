@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-const Product = ({ image, category, name, price }) => {
+const Product = ({ image, category, name, price, onPress }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => onPress}>
       <View style={styles.productWrapper}>
         <Image style={styles.image} source={{ uri: image }} />
         <View style={styles.contentView}>
@@ -13,7 +13,7 @@ const Product = ({ image, category, name, price }) => {
           <Text style={styles.smallContentText}>{category}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
