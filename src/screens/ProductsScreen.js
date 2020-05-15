@@ -7,6 +7,7 @@ import Product from '../components/Product';
 
 const ProductsScreen = ({ navigation }) => {
   const category = navigation.getParam('category');
+  console.log('hello');
   return (
     <Screen navigation={navigation} theme={'dark'}>
       <View style={styles.container}>
