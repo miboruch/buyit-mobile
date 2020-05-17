@@ -6,16 +6,17 @@ import Screen from './Screen';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { LoginSchema } from '../utils/schemaValidation';
+import { userLogin } from '../actions/authenticationActions';
 
-const LoginScreen = ({ navigation, isLoggedIn }) => {
+const LoginScreen = ({ navigation, isLoggedIn, userLogin }) => {
   console.log(isLoggedIn);
   return (
     <Screen navigation={navigation} theme={'light'}>
       <View style={styles.screenContainer}>
         <Formik
           initialValues={{ email: '', password: '' }}
-          onSubmit={(values, { resetForm }) => {
-            console.log(values);
+          onSubmit={({ email, password }, { resetForm }) => {
+            userLogin(email, password);
             resetForm();
           }}
           validationSchema={LoginSchema}
@@ -98,4 +99,10 @@ const mapStateToProps = ({ authenticationReducer: { isLoggedIn } }) => {
   return { isLoggedIn };
 };
 
-export default connect(mapStateToProps)(LoginScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userLogin: (email, password) => dispatch(userLogin(email, password))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

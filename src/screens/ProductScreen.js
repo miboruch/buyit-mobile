@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import Screen from './Screen';
+import Button from '../components/Button';
 
 const ProductScreen = ({ route, navigation }) => {
   const { product } = route.params;
@@ -14,6 +15,7 @@ const ProductScreen = ({ route, navigation }) => {
             <Text style={styles.largeContentText}>{product.name}</Text>
             <Text style={styles.priceContentText}>{product.price} $</Text>
             <Text style={styles.smallContentText}>{product.category}</Text>
+            <Button text={'Add to cart'} />
           </View>
         </View>
       </View>
@@ -23,7 +25,7 @@ const ProductScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    flex: 1,
     alignItems: 'center',
     marginBottom: 50
   },

@@ -133,7 +133,7 @@ export const authLogout = () => async (dispatch) => {
   dispatch(logout());
 };
 
-export const userLogin = (email, password, history) => async (dispatch) => {
+export const userLogin = (email, password) => async (dispatch) => {
   dispatch(authStart());
 
   try {
@@ -143,7 +143,6 @@ export const userLogin = (email, password, history) => async (dispatch) => {
     // dispatch(fetchUserOrders(data.token));
     // dispatch(fetchAllUserProducts(data.token));
     await setAuthItems(data.id, data.token);
-    history.push('/');
   } catch (error) {
     dispatch(authLoginFailure(error));
   }

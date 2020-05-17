@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import Screen from './Screen';
 import Button from '../components/Button';
@@ -14,12 +14,14 @@ const ProductsScreen = ({ route, navigation, getAllProducts, loading, products }
   return (
     <Screen navigation={navigation} theme={'dark'}>
       {loading ? (
-        <Text style={styles.loadingText}>Loading</Text>
+        <View style={styles.indicatorWrapper}>
+          <ActivityIndicator size={'large'} color={'#ccc'} />
+        </View>
       ) : (
         <View style={styles.container}>
           <View style={styles.buttonContainer}>
             <Button text={'Input'} />
-            <Button text={'Add new product'} onPress={() => navigation.navigate('Product')} />
+            <Button text={'Add new product'} />
           </View>
           <Text>Shop/all</Text>
           <ScrollView style={styles.scrollView}>
@@ -47,6 +49,10 @@ const ProductsScreen = ({ route, navigation, getAllProducts, loading, products }
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  indicatorWrapper: {
+    flex: 1,
+    justifyContent: 'center'
   },
   buttonContainer: {
     alignSelf: 'flex-end',

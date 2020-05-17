@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
+import {connect} from 'react-redux';
 import Screen from './Screen';
 import Button from '../components/Button';
 import SmallButton from '../components/SmallButton';
@@ -7,7 +8,7 @@ import logo from '../assets/images/main_logo.jpg';
 
 import { instruction } from '../utils/instruction';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, isLoggedIn }) => {
   return (
     <Screen navigation={navigation} theme='dark'>
       <View style={styles.container}>
@@ -42,7 +43,7 @@ const HomeScreen = ({ navigation }) => {
               </Text>
             ))}
           </View>
-          <Button text={'Account'} onPress={() => navigation.navigate('Login')} />
+          {isLoggedIn ? <Button text={'Logout'} /> : <Button text={'Account'} onPress={() => navigation.navigate('Login')} />}
         </View>
       </View>
     </Screen>
@@ -93,4 +94,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HomeScreen;
+const mapStateToProps = ({ authenticationReducer: { isLoggedIn } }) => {
+  return { isLoggedIn };
+};
+
+export default connect(mapStateToProps)(HomeScreen);
