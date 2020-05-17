@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import Screen from './Screen';
 import iphone from '../assets/images/iphone11.jpg';
+import Input from "../components/Input";
 
 const OrderSummaryScreen = ({ route, navigation }) => {
     return (
@@ -12,6 +13,18 @@ const OrderSummaryScreen = ({ route, navigation }) => {
                     <Image source={iphone} style={styles.image}/>
                     <Text style={styles.smallContentText}>Iphone 11</Text>
                     <Text style={styles.smallContentText}>1992$</Text>
+                </View>
+                <View style={styles.middleView}>
+                    <Text style={styles.smallContentText}>Products: 1</Text>
+                    <Text style={styles.smallContentText}>Total: 1992$</Text>
+                </View>
+                <View style={styles.bottomView}>
+                    <Text style={styles.largeContentText}>Shipping address</Text>
+                    <Input labelText={'email'}></Input>
+                    <Input labelText={'name'}></Input>
+                    <Input labelText={'last name'}></Input>
+                    <Input labelText={'address'}></Input>
+                    <Input labelText={'city'}></Input>
                 </View>
             </View>
         </Screen>
@@ -32,7 +45,7 @@ const styles = StyleSheet.create({
     largeContentText: {
         color: '#000',
         fontFamily: 'Futura',
-        fontSize: 30,
+        fontSize: 20,
         fontWeight: "bold",
         letterSpacing: 1,
         paddingLeft: 15,
@@ -48,6 +61,15 @@ const styles = StyleSheet.create({
     topView: {
         flexDirection: 'row',
         justifyContent: 'space-around'
+    },
+    middleView: {
+        paddingTop: 20,
+        paddingRight: 20,
+        alignItems: 'flex-end'
+    },
+    bottomView: {
+        paddingTop: 20,
+        alignItems: 'center'
     }
 });
 
