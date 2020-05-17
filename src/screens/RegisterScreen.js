@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import Screen from './Screen';
@@ -37,7 +37,7 @@ const RegisterScreen = ({ navigation, userRegister }) => {
             const registerInputData = registerInputArray(values, errors);
             return (
               <View style={styles.container}>
-                <Text style={styles.headerText}>Register</Text>
+                {/*<Text style={styles.headerText}>Register</Text>*/}
                 {registerInputData.map((item) => (
                   <Input
                     key={item.name}
@@ -79,16 +79,12 @@ const styles = StyleSheet.create({
   screenContainer: {
     width: '100%',
     height: '100%',
-    justifyContent: 'center',
     alignItems: 'center'
   },
   container: {
     width: '90%',
-    borderWidth: 1,
-    borderTopWidth: 0,
-    borderColor: '#ccc',
     flex: 1,
-    justifyContent: 'center',
+    marginTop: 20,
     alignItems: 'center',
     position: 'relative'
   },
@@ -103,7 +99,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Futura',
     color: '#2d2d2d',
     position: 'absolute',
-    top: 10
+    top: 0
   },
   loginText: {
     fontFamily: 'Futura',

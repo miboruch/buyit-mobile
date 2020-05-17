@@ -8,7 +8,7 @@ import Button from '../components/Button';
 import { LoginSchema } from '../utils/schemaValidation';
 import { userLogin } from '../actions/authenticationActions';
 
-const LoginScreen = ({ navigation, isLoggedIn, userLogin, loginError }) => {
+const LoginScreen = ({ navigation, userLogin, loginError }) => {
   return (
     <Screen navigation={navigation} theme={'light'}>
       <View style={styles.screenContainer}>
@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ authenticationReducer: { isLoggedIn, loginError } }) => {
-  return { isLoggedIn, loginError };
+const mapStateToProps = ({ authenticationReducer: { loginError } }) => {
+  return { loginError };
 };
 
 const mapDispatchToProps = (dispatch) => {

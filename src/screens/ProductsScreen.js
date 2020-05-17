@@ -23,7 +23,6 @@ const ProductsScreen = ({ route, navigation, getAllProducts, isLoading, products
             <Button text={'Input'} />
             <Button text={'Add new product'} />
           </View>
-          <Text>Shop/all</Text>
           <ScrollView style={styles.scrollView}>
             {products.map((product) => (
               <Product

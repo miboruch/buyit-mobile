@@ -67,7 +67,8 @@ const App = () => (
           },
           headerTintColor: '#f3f3f3',
           headerTitleStyle: {
-            color: '#f3f3f3'
+            color: '#f3f3f3',
+            fontFamily: 'Futura'
           }
         }}
       >

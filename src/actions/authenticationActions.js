@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AsyncStorage } from 'react-native';
 import {
   AUTH_START,
   AUTH_SUCCESS,
@@ -11,7 +12,6 @@ import {
   UPDATE_FAILURE
 } from '../reducers/authenticationReducer';
 import { API_URL } from '../utils/helpers';
-import { AsyncStorage } from 'react-native';
 // import { resetCart } from './cartAction';
 // import { fetchUserOrders } from './orderAction';
 // import { fetchAllUserProducts } from './productAction';
