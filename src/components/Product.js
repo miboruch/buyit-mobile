@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import Button from './Button';
 
 const Product = ({ image, category, name, price, onPress }) => {
   return (

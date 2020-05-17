@@ -13,6 +13,7 @@ const Input = ({ labelText, onChangeText, onBlur, value, isSecure, isEmail }) =>
         value={value}
         secureTextEntry={isSecure}
         keyboardType={isEmail ? 'email-address' : 'default'}
+        autoCapitalize={'none'}
       />
     </View>
   );

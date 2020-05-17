@@ -1,14 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Formik } from 'formik';
+import { connect } from 'react-redux';
 import Screen from './Screen';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { registerInputArray } from '../utils/contentArrays';
 import CountrySelect from '../components/CountrySelect';
 import { RegisterSchema } from '../utils/schemaValidation';
+import { userRegister } from '../actions/authenticationActions';
 
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation, userRegister }) => {
   return (
     <Screen navigation={navigation} theme={'light'}>
       <View style={styles.screenContainer}>
@@ -22,8 +24,11 @@ const RegisterScreen = ({ navigation }) => {
             city: '',
             country: ''
           }}
-          onSubmit={(values, { resetForm }) => {
-            console.log(values);
+          onSubmit={(
+            { email, password, name, lastName, address, city, country },
+            { resetForm }
+          ) => {
+            userRegister(email, password, name, lastName, address, city, country, navigation);
             resetForm();
           }}
           validationSchema={RegisterSchema}
@@ -32,7 +37,7 @@ const RegisterScreen = ({ navigation }) => {
             const registerInputData = registerInputArray(values, errors);
             return (
               <View style={styles.container}>
-                <Text style={styles.headerText}>Register</Text>
+                {/*<Text style={styles.headerText}>Register</Text>*/}
                 {registerInputData.map((item) => (
                   <Input
                     key={item.name}
@@ -74,16 +79,12 @@ const styles = StyleSheet.create({
   screenContainer: {
     width: '100%',
     height: '100%',
-    justifyContent: 'center',
     alignItems: 'center'
   },
   container: {
     width: '90%',
-    borderWidth: 1,
-    borderTopWidth: 0,
-    borderColor: '#ccc',
     flex: 1,
-    justifyContent: 'center',
+    marginTop: 20,
     alignItems: 'center',
     position: 'relative'
   },
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Futura',
     color: '#2d2d2d',
     position: 'absolute',
-    top: 10
+    top: 0
   },
   loginText: {
     fontFamily: 'Futura',
@@ -113,4 +114,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default RegisterScreen;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userRegister: (email, password, name, lastName, city, address, country, navigation) =>
+      dispatch(userRegister(email, password, name, lastName, city, address, country, navigation))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(RegisterScreen);

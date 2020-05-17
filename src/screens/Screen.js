@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { SafeAreaView, TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { colors } from '../styles/theme';
 
-const Screen = ({ navigation, children, theme = 'dark' }) => {
+const Screen = ({ navigation, children, theme = 'dark', isLoggedIn, userInfo }) => {
   return (
     <View
       style={[styles.container, theme === 'dark' ? styles.darkBackground : styles.lightBackground]}
@@ -14,9 +15,14 @@ const Screen = ({ navigation, children, theme = 'dark' }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={{ alignItems: 'flex-start', margin: 16, width: 130, height: 30 }}
-          // onPress={navigation.openDrawer}
         >
-          <Text>something</Text>
+          {isLoggedIn && userInfo && (
+            <Text
+              style={[styles.text, theme === 'dark' ? styles.lightFontColor : styles.darkFontColor]}
+            >
+              {userInfo.email}
+            </Text>
+          )}
         </TouchableOpacity>
         {children}
       </SafeAreaView>
@@ -38,8 +44,14 @@ const styles = StyleSheet.create({
     color: '#2d2d2d'
   },
   text: {
-    fontSize: 20,
+    fontSize: 14,
     fontFamily: 'Futura'
+  },
+  lightFontColor: {
+    color: '#f5f5f5'
+  },
+  darkFontColor: {
+    color: '#2d2d2d'
   },
   box: {
     width: 20,
@@ -61,9 +73,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Futura',
     fontSize: 28,
     position: 'absolute',
-    top: 0,
+    top: 10,
     left: '50%',
-    transform: [{translateX: -35}]
+    transform: [{ translateX: -35 }]
   }
 });
 
@@ -72,4 +84,8 @@ Screen.propTypes = {
   theme: PropTypes.oneOf(['light', 'dark'])
 };
 
-export default Screen;
+const mapStateToProps = ({ authenticationReducer: { isLoggedIn, userInfo } }) => {
+  return { isLoggedIn, userInfo };
+};
+
+export default connect(mapStateToProps)(Screen);

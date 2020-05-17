@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AsyncStorage } from 'react-native';
 import {
   AUTH_START,
   AUTH_SUCCESS,
@@ -11,7 +12,6 @@ import {
   UPDATE_FAILURE
 } from '../reducers/authenticationReducer';
 import { API_URL } from '../utils/helpers';
-import { AsyncStorage } from 'react-native';
 // import { resetCart } from './cartAction';
 // import { fetchUserOrders } from './orderAction';
 // import { fetchAllUserProducts } from './productAction';
@@ -133,17 +133,17 @@ export const authLogout = () => async (dispatch) => {
   dispatch(logout());
 };
 
-export const userLogin = (email, password, history) => async (dispatch) => {
+export const userLogin = (email, password, navigation) => async (dispatch) => {
   dispatch(authStart());
 
   try {
     const { data } = await axios.post(`${API_URL}/user/login`, { email, password });
+    navigation.navigate('Home');
     dispatch(authSuccess(data.token, data.id));
     dispatch(getUserInfo(data.token));
     // dispatch(fetchUserOrders(data.token));
     // dispatch(fetchAllUserProducts(data.token));
     await setAuthItems(data.id, data.token);
-    history.push('/');
   } catch (error) {
     dispatch(authLoginFailure(error));
   }
@@ -157,7 +157,7 @@ export const userRegister = (
   city,
   address,
   country,
-  history
+  navigation
 ) => async (dispatch) => {
   dispatch(authStart());
 
@@ -171,10 +171,10 @@ export const userRegister = (
       address,
       country
     });
-
+    navigation.navigate('Home');
     await setAuthItems(data._doc._id, data.token);
     dispatch(authSuccess(data.token, data._doc._id));
-    history.push('/');
+    dispatch(getUserInfo(data.token));
   } catch (error) {
     dispatch(authRegisterFailure(error));
   }

@@ -1,27 +1,28 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import Screen from './Screen';
 import Button from '../components/Button';
 import Product from '../components/Product';
 import { fetchAllProducts } from '../actions/productActions';
 
-const ProductsScreen = ({ route, navigation, getAllProducts, loading, products }) => {
+const ProductsScreen = ({ route, navigation, getAllProducts, isLoading, products }) => {
   useEffect(() => {
     products.length === 0 && getAllProducts('all', 1);
   }, []);
 
   return (
     <Screen navigation={navigation} theme={'dark'}>
-      {loading ? (
-        <Text style={styles.loadingText}>Loading</Text>
+      {isLoading ? (
+        <View style={styles.indicatorWrapper}>
+          <ActivityIndicator size={'large'} color={'#ccc'} />
+        </View>
       ) : (
         <View style={styles.container}>
           <View style={styles.buttonContainer}>
             <Button text={'Input'} />
-            <Button text={'Add new product'} onPress={() => navigation.navigate('Product')} />
+            <Button text={'Add new product'} />
           </View>
-          <Text>Shop/all</Text>
           <ScrollView style={styles.scrollView}>
             {products.map((product) => (
               <Product
@@ -48,6 +49,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  indicatorWrapper: {
+    flex: 1,
+    justifyContent: 'center'
+  },
   buttonContainer: {
     alignSelf: 'flex-end',
     padding: 10
@@ -63,8 +68,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ productReducer: { loading, products } }) => {
-  return { loading, products };
+const mapStateToProps = ({ productReducer: { isLoading, products } }) => {
+  return { isLoading, products };
 };
 
 const mapDispatchToProps = (dispatch) => {

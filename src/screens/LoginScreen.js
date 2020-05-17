@@ -6,16 +6,16 @@ import Screen from './Screen';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { LoginSchema } from '../utils/schemaValidation';
+import { userLogin } from '../actions/authenticationActions';
 
-const LoginScreen = ({ navigation, isLoggedIn }) => {
-  console.log(isLoggedIn);
+const LoginScreen = ({ navigation, userLogin, loginError }) => {
   return (
     <Screen navigation={navigation} theme={'light'}>
       <View style={styles.screenContainer}>
         <Formik
           initialValues={{ email: '', password: '' }}
-          onSubmit={(values, { resetForm }) => {
-            console.log(values);
+          onSubmit={({ email, password }, { resetForm }) => {
+            userLogin(email, password, navigation);
             resetForm();
           }}
           validationSchema={LoginSchema}
@@ -44,9 +44,10 @@ const LoginScreen = ({ navigation, isLoggedIn }) => {
                   onPress={handleSubmit}
                   isButtonDark={true}
                 />
-                <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Register')}>
                   <Text style={styles.registerText}>or register</Text>
                 </TouchableOpacity>
+                {loginError && <Text style={styles.errorText}>Email or password is incorrect</Text>}
               </View>
             </View>
           )}
@@ -65,9 +66,6 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '90%',
-    borderWidth: 1,
-    borderTopWidth: 0,
-    borderColor: '#ccc',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -91,11 +89,24 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#2d2d2d',
     letterSpacing: 1
+  },
+  errorText: {
+    color: 'tomato',
+    fontSize: 14,
+    fontFamily: 'Futura',
+    letterSpacing: 1,
+    marginTop: 15
   }
 });
 
-const mapStateToProps = ({ authenticationReducer: { isLoggedIn } }) => {
-  return { isLoggedIn };
+const mapStateToProps = ({ authenticationReducer: { loginError } }) => {
+  return { loginError };
 };
 
-export default connect(mapStateToProps)(LoginScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userLogin: (email, password, navigation) => dispatch(userLogin(email, password, navigation))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
