@@ -8,7 +8,7 @@ import Button from '../components/Button';
 import { LoginSchema } from '../utils/schemaValidation';
 import { userLogin } from '../actions/authenticationActions';
 
-const LoginScreen = ({ navigation, isLoggedIn, userLogin }) => {
+const LoginScreen = ({ navigation, isLoggedIn, userLogin, loginError }) => {
   return (
     <Screen navigation={navigation} theme={'light'}>
       <View style={styles.screenContainer}>
@@ -47,6 +47,7 @@ const LoginScreen = ({ navigation, isLoggedIn, userLogin }) => {
                 <TouchableOpacity onPress={() => navigation.navigate('Register')}>
                   <Text style={styles.registerText}>or register</Text>
                 </TouchableOpacity>
+                {loginError && <Text style={styles.errorText}>Email or password is incorrect</Text>}
               </View>
             </View>
           )}
@@ -88,11 +89,18 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#2d2d2d',
     letterSpacing: 1
+  },
+  errorText: {
+    color: 'tomato',
+    fontSize: 14,
+    fontFamily: 'Futura',
+    letterSpacing: 1,
+    marginTop: 15
   }
 });
 
-const mapStateToProps = ({ authenticationReducer: { isLoggedIn } }) => {
-  return { isLoggedIn };
+const mapStateToProps = ({ authenticationReducer: { isLoggedIn, loginError } }) => {
+  return { isLoggedIn, loginError };
 };
 
 const mapDispatchToProps = (dispatch) => {

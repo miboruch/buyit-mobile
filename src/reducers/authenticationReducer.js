@@ -25,7 +25,11 @@ export const authenticationReducer = (state = initialState, action) => {
     case AUTH_START:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        loginError: null,
+        registerError: null,
+        userInfo: null,
+        updateError: null
       };
     case AUTH_SUCCESS:
       return {

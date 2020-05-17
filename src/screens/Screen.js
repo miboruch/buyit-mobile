@@ -16,11 +16,11 @@ const Screen = ({ navigation, children, theme = 'dark', isLoggedIn, userInfo }) 
         <TouchableOpacity
           style={{ alignItems: 'flex-start', margin: 16, width: 130, height: 30 }}
         >
-          {isLoggedIn && (
+          {isLoggedIn && userInfo && (
             <Text
               style={[styles.text, theme === 'dark' ? styles.lightFontColor : styles.darkFontColor]}
             >
-              {userInfo.login}
+              {userInfo.email}
             </Text>
           )}
         </TouchableOpacity>

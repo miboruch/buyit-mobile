@@ -174,6 +174,7 @@ export const userRegister = (
     navigation.navigate('Home');
     await setAuthItems(data._doc._id, data.token);
     dispatch(authSuccess(data.token, data._doc._id));
+    dispatch(getUserInfo(data.token));
   } catch (error) {
     dispatch(authRegisterFailure(error));
   }
