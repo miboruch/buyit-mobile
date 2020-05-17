@@ -1,51 +1,61 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import {connect} from 'react-redux';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
 import Screen from './Screen';
 import Button from '../components/Button';
 import SmallButton from '../components/SmallButton';
 import logo from '../assets/images/main_logo.jpg';
 
 import { instruction } from '../utils/instruction';
+import { authenticationCheck, authLogout } from '../actions/authenticationActions';
 
-const HomeScreen = ({ navigation, isLoggedIn }) => {
+const HomeScreen = ({ navigation, isLoggedIn, authenticationCheck, userLogout, isLoading }) => {
+  useEffect(() => {
+    !isLoggedIn && authenticationCheck();
+  }, []);
+
   return (
     <Screen navigation={navigation} theme='dark'>
-      <View style={styles.container}>
-        <View style={styles.smallButtonView}>
-          <SmallButton />
-          <SmallButton />
-          <SmallButton />
+      {isLoading ? (
+        <View style={styles.indicatorWrapper}>
+          <ActivityIndicator size={'large'} color={'#ccc'} />
         </View>
-        <View style={styles.headingView}>
-          <Text style={styles.title}>OUR PERSONAL {'\n'}SHOPPING EXPERIENCE</Text>
-        </View>
-        <Image style={styles.image} source={logo} />
-        <View style={styles.contentView}>
-          <Button
-            text={'Go to products'}
-            // onPress={() =>
-            //   navigation.navigate('ProductScreen', {
-            //     category: 'all'
-            //   })
-            // }
-            onPress={() =>
-              navigation.navigate('Products', {
-                category: 'all'
-              })
-            }
-            isButtonDark={false}
-          />
-          <View style={styles.textView}>
-            {instruction.map((item, index) => (
-              <Text key={index} style={styles.text}>
-                {item}
-              </Text>
-            ))}
+      ) : (
+        <View style={styles.container}>
+          <View style={styles.smallButtonView}>
+            <SmallButton />
+            <SmallButton />
+            <SmallButton />
           </View>
-          {isLoggedIn ? <Button text={'Logout'} /> : <Button text={'Account'} onPress={() => navigation.navigate('Login')} />}
+          <View style={styles.headingView}>
+            <Text style={styles.title}>OUR PERSONAL {'\n'}SHOPPING EXPERIENCE</Text>
+          </View>
+          <Image style={styles.image} source={logo} />
+          <View style={styles.contentView}>
+            <Button
+              text={'Go to products'}
+              onPress={() =>
+                navigation.navigate('Products', {
+                  category: 'all'
+                })
+              }
+              isButtonDark={false}
+            />
+            <View style={styles.textView}>
+              {instruction.map((item, index) => (
+                <Text key={index} style={styles.text}>
+                  {item}
+                </Text>
+              ))}
+            </View>
+            {isLoggedIn ? (
+              <Button text={'Logout'} onPress={() => userLogout()} />
+            ) : (
+              <Button text={'Account'} onPress={() => navigation.navigate('Login')} />
+            )}
+          </View>
         </View>
-      </View>
+      )}
     </Screen>
   );
 };
@@ -60,6 +70,10 @@ const styles = StyleSheet.create({
     color: '#868990',
     fontWeight: '500',
     letterSpacing: 2
+  },
+  indicatorWrapper: {
+    flex: 1,
+    justifyContent: 'center'
   },
   text: {
     fontFamily: 'Futura',
@@ -94,8 +108,15 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ authenticationReducer: { isLoggedIn } }) => {
-  return { isLoggedIn };
+const mapStateToProps = ({ authenticationReducer: { isLoggedIn, isLoading } }) => {
+  return { isLoggedIn, isLoading };
 };
 
-export default connect(mapStateToProps)(HomeScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    authenticationCheck: () => dispatch(authenticationCheck()),
+    userLogout: () => dispatch(authLogout())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

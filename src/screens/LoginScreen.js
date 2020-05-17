@@ -9,14 +9,13 @@ import { LoginSchema } from '../utils/schemaValidation';
 import { userLogin } from '../actions/authenticationActions';
 
 const LoginScreen = ({ navigation, isLoggedIn, userLogin }) => {
-  console.log(isLoggedIn);
   return (
     <Screen navigation={navigation} theme={'light'}>
       <View style={styles.screenContainer}>
         <Formik
           initialValues={{ email: '', password: '' }}
           onSubmit={({ email, password }, { resetForm }) => {
-            userLogin(email, password);
+            userLogin(email, password, navigation);
             resetForm();
           }}
           validationSchema={LoginSchema}
@@ -45,7 +44,7 @@ const LoginScreen = ({ navigation, isLoggedIn, userLogin }) => {
                   onPress={handleSubmit}
                   isButtonDark={true}
                 />
-                <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Register')}>
                   <Text style={styles.registerText}>or register</Text>
                 </TouchableOpacity>
               </View>
@@ -66,9 +65,6 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '90%',
-    borderWidth: 1,
-    borderTopWidth: 0,
-    borderColor: '#ccc',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -101,7 +97,7 @@ const mapStateToProps = ({ authenticationReducer: { isLoggedIn } }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    userLogin: (email, password) => dispatch(userLogin(email, password))
+    userLogin: (email, password, navigation) => dispatch(userLogin(email, password, navigation))
   };
 };
 

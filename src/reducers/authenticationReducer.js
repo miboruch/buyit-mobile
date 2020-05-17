@@ -15,7 +15,7 @@ const initialState = {
   loginError: null,
   registerError: null,
   userInfoError: null,
-  loading: false,
+  isLoading: false,
   userInfo: null,
   updateError: null
 };
@@ -25,7 +25,7 @@ export const authenticationReducer = (state = initialState, action) => {
     case AUTH_START:
       return {
         ...state,
-        loading: true
+        isLoading: true
       };
     case AUTH_SUCCESS:
       return {
@@ -33,7 +33,7 @@ export const authenticationReducer = (state = initialState, action) => {
         token: action.payload.token,
         userID: action.payload.userID,
         isLoggedIn: true,
-        loading: false,
+        isLoading: false,
         loginError: null,
         registerError: null
       };
@@ -42,14 +42,14 @@ export const authenticationReducer = (state = initialState, action) => {
         ...state,
         loginError: action.payload.error,
         isLoggedIn: false,
-        loading: false
+        isLoading: false
       };
     case AUTH_REGISTER_FAILURE:
       return {
         ...state,
         registerError: action.payload.error,
         isLoggedIn: false,
-        loading: false
+        isLoading: false
       };
     case AUTH_LOGOUT:
       return {
@@ -59,31 +59,31 @@ export const authenticationReducer = (state = initialState, action) => {
         token: null,
         userID: null,
         isLoggedIn: false,
-        loading: false
+        isLoading: false
       };
     case UPDATE_SUCCESS:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         updateError: null
       };
     case UPDATE_FAILURE:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         updateError: action.payload
       };
     case GET_USER_INFO:
       return {
         ...state,
         userInfo: action.payload,
-        loading: false
+        isLoading: false
       };
     case GET_USER_INFO_ERROR:
       return {
         ...state,
         userInfo: null,
-        loading: false,
+        isLoading: false,
         userInfoError: action.payload
       };
     default:

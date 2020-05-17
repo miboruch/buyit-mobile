@@ -7,7 +7,7 @@ const ProductScreen = ({ route, navigation }) => {
   const { product } = route.params;
 
   return (
-    <Screen>
+    <Screen navigation={navigation}>
       <View style={styles.container}>
         <View style={styles.productWrapper}>
           <Image style={styles.image} source={{ uri: product.image }} />
@@ -15,8 +15,8 @@ const ProductScreen = ({ route, navigation }) => {
             <Text style={styles.largeContentText}>{product.name}</Text>
             <Text style={styles.priceContentText}>{product.price} $</Text>
             <Text style={styles.smallContentText}>{product.category}</Text>
-            <Button text={'Add to cart'} />
           </View>
+          <Button text={'Add to cart'} />
         </View>
       </View>
     </Screen>
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
   },
   contentView: {
     marginTop: 10,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 10
   },
   smallContentText: {
     color: '#c0c5ce',

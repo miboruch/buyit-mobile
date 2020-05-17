@@ -133,11 +133,12 @@ export const authLogout = () => async (dispatch) => {
   dispatch(logout());
 };
 
-export const userLogin = (email, password) => async (dispatch) => {
+export const userLogin = (email, password, navigation) => async (dispatch) => {
   dispatch(authStart());
 
   try {
     const { data } = await axios.post(`${API_URL}/user/login`, { email, password });
+    navigation.navigate('Home');
     dispatch(authSuccess(data.token, data.id));
     dispatch(getUserInfo(data.token));
     // dispatch(fetchUserOrders(data.token));
@@ -156,7 +157,7 @@ export const userRegister = (
   city,
   address,
   country,
-  history
+  navigation
 ) => async (dispatch) => {
   dispatch(authStart());
 
@@ -170,10 +171,9 @@ export const userRegister = (
       address,
       country
     });
-
+    navigation.navigate('Home');
     await setAuthItems(data._doc._id, data.token);
     dispatch(authSuccess(data.token, data._doc._id));
-    history.push('/');
   } catch (error) {
     dispatch(authRegisterFailure(error));
   }
