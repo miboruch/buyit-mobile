@@ -1,3 +1,4 @@
+// eslint-disable-next-line prettier/prettier
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
@@ -51,9 +52,10 @@ const HomeScreen = ({ navigation, isLoggedIn, authenticationCheck, userLogout, i
             {isLoggedIn ? (
               <Button text={'Logout'} onPress={() => userLogout()} />
             ) : (
-              <Button text={'Account'} onPress={() => navigation.navigate('Login')} />
+              <Button text={'Log in'} onPress={() => navigation.navigate('Login')} />
             )}
           </View>
+          <Button text={'Test'} onPress={() => navigation.navigate('Account')} />
         </View>
       )}
     </Screen>
