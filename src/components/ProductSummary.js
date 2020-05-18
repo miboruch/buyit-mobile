@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 ProductSummary.propTypes = {
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired
+  price: PropTypes.number.isRequired
 };
 
 export default ProductSummary;

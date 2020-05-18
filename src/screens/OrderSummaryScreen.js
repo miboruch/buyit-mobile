@@ -1,19 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import Screen from './Screen';
 import iphone from '../assets/images/iphone11.jpg';
 import Input from '../components/Input';
 import ProductSummary from '../components/ProductSummary';
 import { OrderSummarySchema } from '../utils/schemaValidation';
+import { orderSummaryArray, orderSummaryInitialValues } from '../utils/contentArrays';
 import Button from '../components/Button';
+import CountrySelect from '../components/CountrySelect';
 
 const OrderSummaryScreen = ({ route, navigation }) => {
-  const [isEditOpen, setEditOpen] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isEditable, setEditable] = useState(false);
+  const orderSummaryValues = orderSummaryInitialValues(isLoggedIn, 'test');
 
   const toggleEdit = () => {
-    setEditOpen(!isEditOpen);
+    setEditable(!isEditable);
   };
+
   return (
     <Screen navigation={navigation} theme={'light'}>
       <ScrollView style={styles.container} contentContainerStyle={{ alignItems: 'center' }}>
@@ -29,15 +34,7 @@ const OrderSummaryScreen = ({ route, navigation }) => {
           <View style={styles.bottomView}>
             <Text style={styles.heading}>Shipping address</Text>
             <Formik
-              initialValues={{
-                email: '',
-                password: '',
-                name: '',
-                lastName: '',
-                address: '',
-                city: '',
-                country: ''
-              }}
+              initialValues={orderSummaryValues}
               onSubmit={(values, { resetForm }) => {
                 console.log(values);
                 resetForm();
@@ -45,52 +42,28 @@ const OrderSummaryScreen = ({ route, navigation }) => {
               validationSchema={OrderSummarySchema}
             >
               {({ handleChange, handleBlur, handleSubmit, values, errors, setFieldValue }) => {
+                const summaryArray = orderSummaryArray(values, errors, isLoggedIn, isEditable);
                 return (
                   <>
-                    <Input
-                      labelText={'Email'}
-                      onChangeText={() => {}}
-                      onBlur={() => {}}
-                      value={'miboruch@gmail.com'}
-                      editable={true}
-                      isEmail={true}
-                    />
-                    <Input
-                      labelText={'Name'}
-                      onChangeText={() => {}}
-                      onBlur={() => {}}
-                      value={'Michał'}
-                      editable={true}
-                    />
-                    <Input
-                      labelText={'Last name'}
-                      onChangeText={() => {}}
-                      onBlur={() => {}}
-                      value={'Boruch'}
-                      editable={true}
-                    />
-                    <Input
-                      labelText={'Address'}
-                      onChangeText={() => {}}
-                      onBlur={() => {}}
-                      value={'Pawia 29/3'}
-                      editable={true}
-                    />
-                    <Input
-                      labelText={'City'}
-                      onChangeText={() => {}}
-                      onBlur={() => {}}
-                      value={'Kraków'}
-                      editable={false}
-                    />
-                    <Input
+                    {summaryArray.map((item) => (
+                      <Input
+                        labelText={item.labelText}
+                        onChangeText={handleChange(item.name)}
+                        onBlur={handleBlur(item.name)}
+                        value={item.value}
+                        editable={item.isEditable}
+                        key={item.name}
+                        isEmail={item.isEmail}
+                      />
+                    ))}
+                    <CountrySelect
+                      handleChange={handleChange}
+                      setFieldValue={setFieldValue}
                       labelText={'Country'}
-                      onChangeText={() => {}}
-                      onBlur={() => {}}
-                      value={'Poland'}
-                      editable={true}
+                      formFieldName={'country'}
                     />
-                    <Button text={'Submit'} isButtonDark={true}/>
+                    <Button text={'Edit'} isButtonDark={true} onPress={() => toggleEdit()} />
+                    <Button text={'Submit'} isButtonDark={true} onPress={handleSubmit} />
                   </>
                 );
               }}
@@ -135,26 +108,6 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     fontSize: 13,
     color: '#2d2d2d'
-  },
-  largeContentText: {
-    color: '#2d2d2d',
-    fontFamily: 'Futura',
-    fontSize: 20,
-    fontWeight: 'bold',
-    letterSpacing: 1,
-    paddingLeft: 15
-  },
-  button: {
-    paddingLeft: 15,
-    paddingTop: 15
-  },
-  image: {
-    width: 90,
-    height: 90
-  },
-  middleView: {
-    paddingTop: 20,
-    alignItems: 'flex-end'
   },
   bottomView: {
     width: '100%',
