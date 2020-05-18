@@ -9,15 +9,22 @@ import Button from '../components/Button'
 const CartScreen = ({ route, navigation }) => {
     return (
         <Screen navigation={navigation} theme={'light'}>
+            <View style={styles.productSummaryWrapper}>
+                <ProductSummary image={iphone} price={1992} name={'Iphone 11'} />
+            </View>
             <View style={styles.container}>
-                <View style={styles.productSummaryWrapper}>
-                    <ProductSummary image={iphone} price={1992} name={'Iphone 11'} />
-                    <Text style={styles.smallContentText}>Product wille be removed from your cart at 19:02</Text>
-                    <View style={styles.buttonWrapper}>
-                        <Button isButtonDark={true} text={'Remove product'}/>
-                    </View>
+                <Text style={styles.smallContentText}>Product will be removed from your cart at 19:02</Text>
+                <View style={styles.buttonWrapper}>
+                    <Button isButtonDark={true} text={'Remove product'}/>
                 </View>
-
+            </View>
+            <View style={styles.bottomPage}>
+                <View style={styles.buttonWrapper}>
+                    <View style={styles.textWrapper}>
+                        <Text style={styles.priceContentText}> Total price: 1922 $</Text>
+                    </View>
+                    <Button isButtonDark={true} text={'Checkout'}/>
+                </View>
             </View>
         </Screen>
     );
@@ -25,20 +32,31 @@ const CartScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems:'center'
+        flex:5,
     },
     productSummaryWrapper:{
-        borderTopWidth: 1,
+        flex:1,
+        borderTopWidth:1,
         borderColor: 'grey',
-        flex: 1,
-        justifyContent: 'flex-start',
+        paddingTop:20,
+        paddingBottom: 20
     },
     smallContentText: {
         color: '#2d2d2d',
         fontFamily: 'Futura',
         fontSize: 15,
-        marginTop: 5
+        marginTop: 5,
+        textAlign: 'center'
+    },
+    textWrapper: {
+        alignItems: 'flex-end'
+    },
+    priceContentText: {
+        color: '#2d2d2d',
+        fontFamily: 'Futura',
+        fontSize: 15,
+        marginTop: 5,
+        paddingBottom: 20
     },
     largeContentText: {
         color: '#2d2d2d',
@@ -49,6 +67,10 @@ const styles = StyleSheet.create({
     },
     buttonWrapper: {
         alignItems: 'center'
+    },
+    bottomPage:{
+        borderTopWidth:1,
+        justifyContent: 'flex-end'
     }
 });
 
