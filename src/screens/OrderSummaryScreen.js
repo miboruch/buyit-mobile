@@ -5,7 +5,8 @@ import Screen from './Screen';
 import iphone from '../assets/images/iphone11.jpg';
 import Input from '../components/Input';
 import ProductSummary from '../components/ProductSummary';
-import { RegisterSchema } from '../utils/schemaValidation';
+import { OrderSummarySchema } from '../utils/schemaValidation';
+import Button from '../components/Button';
 
 const OrderSummaryScreen = ({ route, navigation }) => {
   const [isEditOpen, setEditOpen] = useState(false);
@@ -41,11 +42,19 @@ const OrderSummaryScreen = ({ route, navigation }) => {
                 console.log(values);
                 resetForm();
               }}
-              validationSchema={RegisterSchema}
+              validationSchema={OrderSummarySchema}
             >
               {({ handleChange, handleBlur, handleSubmit, values, errors, setFieldValue }) => {
                 return (
                   <>
+                    <Input
+                      labelText={'Email'}
+                      onChangeText={() => {}}
+                      onBlur={() => {}}
+                      value={'miboruch@gmail.com'}
+                      editable={true}
+                      isEmail={true}
+                    />
                     <Input
                       labelText={'Name'}
                       onChangeText={() => {}}
@@ -81,6 +90,7 @@ const OrderSummaryScreen = ({ route, navigation }) => {
                       value={'Poland'}
                       editable={true}
                     />
+                    <Button text={'Submit'} isButtonDark={true}/>
                   </>
                 );
               }}
