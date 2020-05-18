@@ -37,7 +37,6 @@ const RegisterScreen = ({ navigation, userRegister }) => {
             const registerInputData = registerInputArray(values, errors);
             return (
               <View style={styles.container}>
-                {/*<Text style={styles.headerText}>Register</Text>*/}
                 {registerInputData.map((item) => (
                   <Input
                     key={item.name}
