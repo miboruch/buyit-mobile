@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-around',
+    marginBottom: 10
   },
   image: {
     width: 100,
