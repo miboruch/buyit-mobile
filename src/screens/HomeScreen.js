@@ -54,7 +54,7 @@ const HomeScreen = ({ navigation, isLoggedIn, authenticationCheck, userLogout, i
               <Button text={'Log in'} onPress={() => navigation.navigate('Login')} />
             )}
           </View>
-          <Button text={'Test'} onPress={() => navigation.navigate('Account')} />
+          <Button text={'Test'} onPress={() => navigation.navigate('CartScreen')} />
         </View>
       )}
     </Screen>
