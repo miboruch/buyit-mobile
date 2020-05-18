@@ -17,7 +17,7 @@ const initialState = {
   userProducts: [],
   totalProductsCounter: undefined,
   singleProduct: {},
-  loading: true,
+  isLoading: true,
   error: null,
   removeError: null,
   category: null
@@ -28,38 +28,38 @@ export const productReducer = (state = initialState, action) => {
     case FETCH_START:
       return {
         ...state,
-        loading: true
+        isLoading: true
       };
     case FETCH_SUCCESS:
       return {
         ...state,
         products: action.payload,
-        loading: false,
+        isLoading: false,
         error: null
       };
     case FETCH_SINGLE_SUCCESS:
       return {
         ...state,
         singleProduct: action.payload,
-        loading: false,
+        isLoading: false,
         error: null
       };
     case FETCH_USER_PRODUCTS_SUCCESS:
       return {
         ...state,
         userProducts: action.payload,
-        loading: false
+        isLoading: false
       };
     case FETCH_FAILURE:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         error: action.payload.error
       };
     case LOAD_STOP:
       return {
         ...state,
-        loading: false
+        isLoading: false
       };
     case REMOVE_FAILURE:
       return {
