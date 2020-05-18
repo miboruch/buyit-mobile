@@ -13,7 +13,9 @@ const CartScreen = ({ route, navigation }) => {
                 <View style={styles.productSummaryWrapper}>
                     <ProductSummary image={iphone} price={1992} name={'Iphone 11'} />
                     <Text style={styles.smallContentText}>Product wille be removed from your cart at 19:02</Text>
-                    {/*<Button text={}/>*/}
+                    <View style={styles.buttonWrapper}>
+                        <Button isButtonDark={true} text={'Remove product'}/>
+                    </View>
                 </View>
 
             </View>
@@ -44,6 +46,9 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         letterSpacing: 1
+    },
+    buttonWrapper: {
+        alignItems: 'center'
     }
 });
 
