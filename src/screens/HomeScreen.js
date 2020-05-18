@@ -1,4 +1,3 @@
-// eslint-disable-next-line prettier/prettier
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';

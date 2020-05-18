@@ -16,7 +16,7 @@ const ProductScreen = ({ route, navigation }) => {
             <Text style={styles.priceContentText}>{product.price} $</Text>
             <Text style={styles.smallContentText}>{product.category}</Text>
           </View>
-          <Button text={'Add to cart'} />
+          <Button text={'Add to cart'} onPress={() => navigation.navigate('OrderSummary')} />
         </View>
       </View>
     </Screen>
