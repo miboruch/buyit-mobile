@@ -3,14 +3,14 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 const SmallButton = ({ onPress, text, isButtonDark = false }) => {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[styles.container, isButtonDark ? styles.darkContainer : styles.lightContainer]}
-    >
-      <Text style={[styles.text, isButtonDark ? styles.darkThemeText : styles.lightThemeText]}>
-        {text}
-      </Text>
-    </TouchableOpacity>
+        <TouchableOpacity
+            onPress={onPress}
+            style={[styles.container, isButtonDark ? styles.darkContainer : styles.lightContainer]}
+        >
+          <Text style={[styles.text, isButtonDark ? styles.darkThemeText : styles.lightThemeText]}>
+            {text}
+          </Text>
+        </TouchableOpacity>
   );
 };
 
@@ -38,6 +38,11 @@ const styles = StyleSheet.create({
   },
   darkThemeText: {
     color: '#2d2d2d'
+  },
+  logo: {
+    width: 10,
+    height: 10,
+    resizeMode: 'cover'
   }
 });
 

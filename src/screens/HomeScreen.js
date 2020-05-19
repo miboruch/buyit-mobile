@@ -23,9 +23,14 @@ const HomeScreen = ({ navigation, isLoggedIn, authenticationCheck, userLogout, i
       ) : (
         <View style={styles.container}>
           <View style={styles.smallButtonView}>
-            <SmallButton />
-            <SmallButton />
-            <SmallButton />
+            <View style={styles.leftButton}>
+              <SmallButton />
+            </View>
+            <View style={styles.rightButtons}>
+              <SmallButton image={logo} />
+              <SmallButton />
+            </View>
+
           </View>
           <View style={styles.headingView}>
             <Text style={styles.title}>OUR PERSONAL {'\n'}SHOPPING EXPERIENCE</Text>
@@ -54,7 +59,7 @@ const HomeScreen = ({ navigation, isLoggedIn, authenticationCheck, userLogout, i
               <Button text={'Log in'} onPress={() => navigation.navigate('Login')} />
             )}
           </View>
-          <Button text={'Test'} onPress={() => navigation.navigate('CartScreen')} />
+          {/*<Button text={'Test'} onPress={() => navigation.navigate('CartScreen')} />*/}
         </View>
       )}
     </Screen>
@@ -101,12 +106,22 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   smallButtonView: {
+    flex:1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    position: 'absolute',
     top: -60,
-    right: 10
-  }
+    paddingLeft: 10
+  },
+  leftButton: {
+    alignItems: 'flex-start',
+    width:'70%'
+  },
+  rightButtons: {
+    flexDirection: 'row',
+    width:'30%',
+    paddingRight: -20,
+    justifyContent: 'space-around'
+  },
+
 });
 
 const mapStateToProps = ({ authenticationReducer: { isLoggedIn, isLoading } }) => {
