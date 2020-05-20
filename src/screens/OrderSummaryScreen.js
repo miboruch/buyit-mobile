@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Formik } from 'formik';
+import { connect } from 'react-redux';
 import Screen from './Screen';
 import iphone from '../assets/images/iphone11.jpg';
 import Input from '../components/Input';
@@ -10,10 +11,17 @@ import { orderSummaryArray, orderSummaryInitialValues } from '../utils/contentAr
 import Button from '../components/Button';
 import CountrySelect from '../components/CountrySelect';
 
-const OrderSummaryScreen = ({ route, navigation }) => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+const OrderSummaryScreen = ({ navigation, isLoggedIn, userInfo }) => {
   const [isEditable, setEditable] = useState(false);
-  const orderSummaryValues = orderSummaryInitialValues(isLoggedIn, 'test');
+  const { email, name, lastName, address, city, country } = userInfo;
+  const orderSummaryValues = orderSummaryInitialValues(isLoggedIn, {
+    email,
+    name,
+    lastName,
+    address,
+    city,
+    country
+  });
 
   const toggleEdit = () => {
     setEditable(!isEditable);
@@ -59,6 +67,7 @@ const OrderSummaryScreen = ({ route, navigation }) => {
                     <CountrySelect
                       handleChange={handleChange}
                       setFieldValue={setFieldValue}
+                      defaultCountry={isLoggedIn ? country : null}
                       labelText={'Country'}
                       formFieldName={'country'}
                     />
@@ -116,4 +125,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default OrderSummaryScreen;
+const mapStateToProps = ({ authenticationReducer: { isLoggedIn, userInfo } }) => {
+  return { isLoggedIn, userInfo };
+};
+
+export default connect(mapStateToProps)(OrderSummaryScreen);

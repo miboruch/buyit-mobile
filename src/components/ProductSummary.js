@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 });
 
 ProductSummary.propTypes = {
-  image: PropTypes.string.isRequired,
+  image: PropTypes.any.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired
 };

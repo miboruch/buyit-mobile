@@ -22,15 +22,14 @@ const HomeScreen = ({ navigation, isLoggedIn, authenticationCheck, userLogout, i
         </View>
       ) : (
         <View style={styles.container}>
-          <View style={styles.smallButtonView}>
+          <View style={styles.buttonsContainer}>
             <View style={styles.leftButton}>
               <SmallButton />
             </View>
             <View style={styles.rightButtons}>
-              <SmallButton image={logo} />
+              <SmallButton />
               <SmallButton />
             </View>
-
           </View>
           <View style={styles.headingView}>
             <Text style={styles.title}>OUR PERSONAL {'\n'}SHOPPING EXPERIENCE</Text>
@@ -93,7 +92,8 @@ const styles = StyleSheet.create({
   },
   headingView: {
     marginLeft: 10,
-    marginBottom: 20
+    marginBottom: 20,
+    marginTop: 20
   },
   contentView: {
     marginTop: 40,
@@ -105,23 +105,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 10
   },
-  smallButtonView: {
-    flex:1,
+  buttonsContainer: {
     flexDirection: 'row',
-    top: -60,
-    paddingLeft: 10
+    // top: -50,
+    paddingLeft: 10,
+    position: 'relative'
   },
   leftButton: {
-    alignItems: 'flex-start',
-    width:'70%'
+    position: 'absolute',
+    left: 10,
+    top: -50
   },
   rightButtons: {
     flexDirection: 'row',
-    width:'30%',
-    paddingRight: -20,
-    justifyContent: 'space-around'
-  },
-
+    position: 'absolute',
+    right: 10,
+    top: -50
+  }
 });
 
 const mapStateToProps = ({ authenticationReducer: { isLoggedIn, isLoading } }) => {
