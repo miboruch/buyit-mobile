@@ -1,75 +1,69 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import Screen from './Screen';
 import ProductSummary from '../components/ProductSummary';
 import iphone from '../assets/images/iphone11.jpg';
 import Button from '../components/Button';
 
-const CartScreen = ({ route, navigation }) => {
+const CartScreen = ({ navigation }) => {
   return (
     <Screen navigation={navigation} theme={'light'}>
-      <View style={styles.productSummaryWrapper}>
-        <ProductSummary image={iphone} price={1992} name={'Iphone 11'} />
-      </View>
-      <View style={styles.container}>
-        <Text style={styles.smallContentText}>Product will be removed from your cart at 19:02</Text>
-        <View style={styles.buttonWrapper}>
-          <Button isButtonDark={true} text={'Remove product'} />
-        </View>
-      </View>
-      <View style={styles.bottomPage}>
-        <View style={styles.buttonWrapper}>
-          <View style={styles.textWrapper}>
-            <Text style={styles.priceContentText}> Total price: 1922 $</Text>
+      <ScrollView style={styles.container}>
+        <View style={styles.productsWrapper}>
+          <View style={styles.singleProductWrapper}>
+            <ProductSummary image={iphone} price={1992} name={'Iphone 11'} />
+            <Text style={styles.smallContentText}>
+              Product will be removed from your cart at 19:02
+            </Text>
+            <Button isButtonDark={true} text={'Remove product'} />
           </View>
+        </View>
+        <View style={styles.summaryWrapper}>
+          <Text style={styles.priceContentText}> Total price: 1922 $</Text>
           <Button isButtonDark={true} text={'Checkout'} />
         </View>
-      </View>
+      </ScrollView>
     </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 5
-  },
-  productSummaryWrapper: {
     flex: 1,
     borderTopWidth: 1,
-    borderColor: 'grey',
-    paddingTop: 20,
-    paddingBottom: 20
+    borderBottomWidth: 1,
+    borderColor: '#ccc'
+  },
+  productsWrapper: {
+    width: '100%',
+    paddingTop: 10,
+    paddingBottom: 10
+  },
+  singleProductWrapper: {
+    marginTop: 10,
+    marginBottom: 10,
+    alignItems: 'center'
   },
   smallContentText: {
     color: '#2d2d2d',
     fontFamily: 'Futura',
-    fontSize: 15,
+    fontSize: 12,
     marginTop: 5,
-    textAlign: 'center'
-  },
-  textWrapper: {
-    alignItems: 'flex-end'
+    marginBottom: 10
   },
   priceContentText: {
     color: '#2d2d2d',
     fontFamily: 'Futura',
-    fontSize: 15,
+    fontSize: 14,
     marginTop: 5,
-    paddingBottom: 20
+    paddingBottom: 5
   },
-  largeContentText: {
-    color: '#2d2d2d',
-    fontFamily: 'Futura',
-    fontSize: 30,
-    fontWeight: 'bold',
-    letterSpacing: 1
-  },
-  buttonWrapper: {
-    alignItems: 'center'
-  },
-  bottomPage: {
+  summaryWrapper: {
+    paddingTop: 20,
     borderTopWidth: 1,
-    justifyContent: 'flex-end'
+    borderColor: '#ccc',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 

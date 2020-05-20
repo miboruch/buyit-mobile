@@ -39,6 +39,7 @@ const ProductsScreen = ({ route, navigation, getAllProducts, isLoading, products
               />
             ))}
           </ScrollView>
+          <Button text={'Cart'} onPress={() => navigation.navigate('Cart')} />
         </View>
       )}
     </Screen>

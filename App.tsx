@@ -100,7 +100,7 @@ const App = () => (
         <Stack.Screen name={'Register'} component={RegisterScreen} />
         <Stack.Screen name={'Account'} component={AccountScreen} />
         <Stack.Screen name={'OrderSummary'} component={OrderSummaryScreen} />
-        <Stack.Screen name={'CartScreen'} component={CartScreen} />
+        <Stack.Screen name={'Cart'} component={CartScreen} />
       </Stack.Navigator>
       {/*<AppContainer />*/}
     </NavigationContainer>
