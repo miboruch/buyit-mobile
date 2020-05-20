@@ -4,8 +4,8 @@ import { countries } from 'countries-list';
 import { StyleSheet, Text, View, ActionSheetIOS } from 'react-native';
 import Button from './Button';
 
-const CountrySelect = ({ setFieldValue }) => {
-  const [selectedCountry, setSelectedCountry] = useState('Andorra');
+const CountrySelect = ({ setFieldValue, defaultCountry }) => {
+  const [selectedCountry, setSelectedCountry] = useState(defaultCountry ? defaultCountry : 'Andorra');
   const countriesArray = Object.values(countries).map((item) => item.name);
 
   useEffect(() => {
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
 
 CountrySelect.propTypes = {
   setFieldValue: PropTypes.func.isRequired,
+  defaultCountry: PropTypes.string
 };
 
 export default CountrySelect;

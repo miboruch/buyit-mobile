@@ -22,10 +22,14 @@ const HomeScreen = ({ navigation, isLoggedIn, authenticationCheck, userLogout, i
         </View>
       ) : (
         <View style={styles.container}>
-          <View style={styles.smallButtonView}>
-            <SmallButton />
-            <SmallButton />
-            <SmallButton />
+          <View style={styles.buttonsContainer}>
+            <View style={styles.leftButton}>
+              <SmallButton />
+            </View>
+            <View style={styles.rightButtons}>
+              <SmallButton />
+              <SmallButton />
+            </View>
           </View>
           <View style={styles.headingView}>
             <Text style={styles.title}>OUR PERSONAL {'\n'}SHOPPING EXPERIENCE</Text>
@@ -54,7 +58,7 @@ const HomeScreen = ({ navigation, isLoggedIn, authenticationCheck, userLogout, i
               <Button text={'Log in'} onPress={() => navigation.navigate('Login')} />
             )}
           </View>
-          <Button text={'Test'} onPress={() => navigation.navigate('Account')} />
+          {/*<Button text={'Test'} onPress={() => navigation.navigate('CartScreen')} />*/}
         </View>
       )}
     </Screen>
@@ -88,7 +92,8 @@ const styles = StyleSheet.create({
   },
   headingView: {
     marginLeft: 10,
-    marginBottom: 20
+    marginBottom: 20,
+    marginTop: 20
   },
   contentView: {
     marginTop: 40,
@@ -100,12 +105,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 10
   },
-  smallButtonView: {
+  buttonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    // top: -50,
+    paddingLeft: 10,
+    position: 'relative'
+  },
+  leftButton: {
     position: 'absolute',
-    top: -60,
-    right: 10
+    left: 10,
+    top: -50
+  },
+  rightButtons: {
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 10,
+    top: -50
   }
 });
 

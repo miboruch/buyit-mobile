@@ -15,6 +15,7 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import ProductScreen from './src/screens/ProductScreen';
 import AccountScreen from "./src/screens/AccountScreen";
 import OrderSummaryScreen from "./src/screens/OrderSummaryScreen";
+import CartScreen from "./src/screens/CartScreen";
 
 const DrawerNavigation = createDrawerNavigator(
   {
@@ -52,6 +53,12 @@ const DrawerNavigation = createDrawerNavigator(
         screen: OrderSummaryScreen,
         navigationOptions:{
             title: 'OrderSummary'
+        }
+    },
+    CartScreen: {
+        screen: CartScreen,
+        navigationOptions:{
+            title: 'CartScreen'
         }
     }
   },
@@ -93,6 +100,7 @@ const App = () => (
         <Stack.Screen name={'Register'} component={RegisterScreen} />
         <Stack.Screen name={'Account'} component={AccountScreen} />
         <Stack.Screen name={'OrderSummary'} component={OrderSummaryScreen} />
+        <Stack.Screen name={'Cart'} component={CartScreen} />
       </Stack.Navigator>
       {/*<AppContainer />*/}
     </NavigationContainer>

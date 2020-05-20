@@ -38,6 +38,11 @@ const styles = StyleSheet.create({
   },
   darkThemeText: {
     color: '#2d2d2d'
+  },
+  logo: {
+    width: 10,
+    height: 10,
+    resizeMode: 'cover'
   }
 });
 
