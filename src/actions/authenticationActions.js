@@ -12,6 +12,7 @@ import {
   UPDATE_FAILURE
 } from '../reducers/authenticationReducer';
 import { API_URL } from '../utils/helpers';
+import { clearCart } from './cartActions';
 // import { resetCart } from './cartAction';
 // import { fetchUserOrders } from './orderAction';
 // import { fetchAllUserProducts } from './productAction';
@@ -130,6 +131,7 @@ export const authLogout = () => async (dispatch) => {
 
   await removeAuthItems();
   // resetCart();
+  dispatch(clearCart());
   dispatch(logout());
 };
 

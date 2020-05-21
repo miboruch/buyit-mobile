@@ -1,27 +1,49 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import Screen from './Screen';
 import ProductSummary from '../components/ProductSummary';
-import iphone from '../assets/images/iphone11.jpg';
 import Button from '../components/Button';
+import { removeProductFromCart } from '../actions/cartActions';
 
-const CartScreen = ({ navigation }) => {
+const CartScreen = ({ navigation, cart, totalPrice, removeProduct }) => {
   return (
     <Screen navigation={navigation} theme={'light'}>
       <ScrollView style={styles.container}>
-        <View style={styles.productsWrapper}>
-          <View style={styles.singleProductWrapper}>
-            <ProductSummary image={iphone} price={1992} name={'Iphone 11'} />
-            <Text style={styles.smallContentText}>
-              Product will be removed from your cart at 19:02
-            </Text>
-            <Button isButtonDark={true} text={'Remove product'} />
+        {cart.length !== 0 ? (
+          <>
+            {cart.map((product) => (
+              <View style={styles.productsWrapper} key={product._id}>
+                <View style={styles.singleProductWrapper}>
+                  <ProductSummary image={product.image} price={product.price} name={product.name} />
+                  <Text style={styles.smallContentText}>
+                    Product will be removed from your cart at{' '}
+                    {new Date(product.expire).toLocaleTimeString()}
+                  </Text>
+                  <Button
+                    isButtonDark={true}
+                    text={'Remove product'}
+                    onPress={() => removeProduct(product)}
+                  />
+                </View>
+              </View>
+            ))}
+          </>
+        ) : (
+          <View style={styles.emptyWrapper}>
+            <Text style={styles.priceContentText}>Your cart is empty</Text>
           </View>
-        </View>
-        <View style={styles.summaryWrapper}>
-          <Text style={styles.priceContentText}> Total price: 1922 $</Text>
-          <Button isButtonDark={true} text={'Checkout'} />
-        </View>
+        )}
+        {cart.length !== 0 && (
+          <View style={styles.summaryWrapper}>
+            <Text style={styles.priceContentText}>Total price: {totalPrice} $</Text>
+            <Button
+              isButtonDark={true}
+              text={'Checkout'}
+              onPress={() => navigation.navigate('OrderSummary')}
+            />
+          </View>
+        )}
       </ScrollView>
     </Screen>
   );
@@ -64,7 +86,22 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  emptyWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 0.8
   }
 });
 
-export default CartScreen;
+const mapStateToProps = ({ cartReducer: { cart, totalPrice } }) => {
+  return { cart, totalPrice };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeProduct: (product) => dispatch(removeProductFromCart(product))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartScreen);

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { SafeAreaView, TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { colors } from '../styles/theme';
+import SmallButton from '../components/SmallButton';
 
-const Screen = ({ navigation, children, theme = 'dark', isLoggedIn, userInfo }) => {
+const Screen = ({ navigation, children, theme = 'dark' }) => {
   return (
     <View
       style={[styles.container, theme === 'dark' ? styles.darkBackground : styles.lightBackground]}
@@ -13,17 +13,14 @@ const Screen = ({ navigation, children, theme = 'dark', isLoggedIn, userInfo }) 
         <TouchableOpacity style={styles.absoluteView} onPress={() => navigation.navigate('Home')}>
           <Text style={styles.mainTitle}>buyIT</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{ alignItems: 'flex-start', margin: 16, width: 130, height: 30 }}
-        >
-          {isLoggedIn && userInfo && (
-            <Text
-              style={[styles.text, theme === 'dark' ? styles.lightFontColor : styles.darkFontColor]}
-            >
-              {userInfo.email}
-            </Text>
-          )}
-        </TouchableOpacity>
+        <View style={styles.leftButton}>
+          <SmallButton isButtonDark={theme !== 'dark'} />
+        </View>
+        <View style={styles.rightButtons}>
+          <SmallButton isButtonDark={theme !== 'dark'} />
+          <SmallButton isButtonDark={theme !== 'dark'} />
+        </View>
+        <View style={styles.childrenWrapper} />
         {children}
       </SafeAreaView>
     </View>
@@ -43,30 +40,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundLight,
     color: '#2d2d2d'
   },
-  text: {
-    fontSize: 14,
-    fontFamily: 'Futura'
-  },
-  lightFontColor: {
-    color: '#f5f5f5'
-  },
-  darkFontColor: {
-    color: '#2d2d2d'
-  },
-  box: {
-    width: 20,
-    height: 20,
-    backgroundColor: 'red'
-  },
   absoluteView: {
     position: 'absolute',
-    height: 135,
+    height: 60,
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    zIndex: 1
   },
   mainTitle: {
     color: '#868990',
@@ -75,7 +58,24 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     left: '50%',
-    transform: [{ translateX: -35 }]
+    transform: [{ translateX: -35 }],
+    zIndex: 5
+  },
+  leftButton: {
+    position: 'absolute',
+    left: 10,
+    top: 5,
+    zIndex: 2
+  },
+  rightButtons: {
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 10,
+    top: 5,
+    zIndex: 2
+  },
+  childrenWrapper: {
+    marginBottom: 60
   }
 });
 
@@ -84,8 +84,4 @@ Screen.propTypes = {
   theme: PropTypes.oneOf(['light', 'dark'])
 };
 
-const mapStateToProps = ({ authenticationReducer: { isLoggedIn, userInfo } }) => {
-  return { isLoggedIn, userInfo };
-};
-
-export default connect(mapStateToProps)(Screen);
+export default Screen;

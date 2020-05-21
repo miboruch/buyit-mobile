@@ -101,15 +101,11 @@ export const orderSummaryArray = (values, errors, isLoggedIn, isEditable) => {
   ];
 };
 
-export const orderSummaryInitialValues = (isLoggedIn, values) => {
-  return isLoggedIn
-    ? values
-    : {
-        email: '',
-        name: '',
-        lastName: '',
-        address: '',
-        city: '',
-        country: ''
-      };
+export const orderInitialValues = {
+  email: '',
+  name: '',
+  lastName: '',
+  address: '',
+  city: '',
+  country: ''
 };

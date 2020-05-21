@@ -3,25 +3,26 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import Screen from './Screen';
-import iphone from '../assets/images/iphone11.jpg';
 import Input from '../components/Input';
 import ProductSummary from '../components/ProductSummary';
 import { OrderSummarySchema } from '../utils/schemaValidation';
-import { orderSummaryArray, orderSummaryInitialValues } from '../utils/contentArrays';
+import { orderSummaryArray } from '../utils/contentArrays';
 import Button from '../components/Button';
 import CountrySelect from '../components/CountrySelect';
+import { orderInitialValues } from '../utils/contentArrays';
 
-const OrderSummaryScreen = ({ navigation, isLoggedIn, userInfo }) => {
+const OrderSummaryScreen = ({ navigation, isLoggedIn, userInfo, cart, totalPrice }) => {
   const [isEditable, setEditable] = useState(false);
-  const { email, name, lastName, address, city, country } = userInfo;
-  const orderSummaryValues = orderSummaryInitialValues(isLoggedIn, {
-    email,
-    name,
-    lastName,
-    address,
-    city,
-    country
-  });
+  const orderSummaryValues = isLoggedIn
+    ? {
+        email: userInfo.email,
+        name: userInfo.name,
+        lastName: userInfo.lastName,
+        address: userInfo.address,
+        city: userInfo.city,
+        country: userInfo.country
+      }
+    : orderInitialValues;
 
   const toggleEdit = () => {
     setEditable(!isEditable);
@@ -33,11 +34,18 @@ const OrderSummaryScreen = ({ navigation, isLoggedIn, userInfo }) => {
         <View style={styles.contentWrapper}>
           <Text style={styles.heading}>Order Summary</Text>
           <View style={styles.productWrapper}>
-            <ProductSummary image={iphone} price={1992} name={'Iphone 11'} />
+            {cart.map((product) => (
+              <ProductSummary
+                image={product.image}
+                price={product.price}
+                name={product.name}
+                key={product._id}
+              />
+            ))}
           </View>
           <View style={styles.summary}>
-            <Text style={styles.summaryText}>Products: 1</Text>
-            <Text style={styles.summaryText}>Total: 1992$</Text>
+            <Text style={styles.summaryText}>Products: {cart.length}</Text>
+            <Text style={styles.summaryText}>Total: ${totalPrice}</Text>
           </View>
           <View style={styles.bottomView}>
             <Text style={styles.heading}>Shipping address</Text>
@@ -67,7 +75,7 @@ const OrderSummaryScreen = ({ navigation, isLoggedIn, userInfo }) => {
                     <CountrySelect
                       handleChange={handleChange}
                       setFieldValue={setFieldValue}
-                      defaultCountry={isLoggedIn ? country : null}
+                      defaultCountry={isLoggedIn && userInfo ? userInfo.country : null}
                       labelText={'Country'}
                       formFieldName={'country'}
                     />
@@ -89,7 +97,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   contentWrapper: {
-    width: '90%',
+    width: '100%',
     alignItems: 'center'
   },
   productWrapper: {
@@ -110,6 +118,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     paddingTop: 20,
     paddingBottom: 20,
+    paddingRight: 30,
     alignItems: 'flex-end'
   },
   summaryText: {
@@ -125,8 +134,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ authenticationReducer: { isLoggedIn, userInfo } }) => {
-  return { isLoggedIn, userInfo };
+const mapStateToProps = ({
+  authenticationReducer: { isLoggedIn, userInfo },
+  cartReducer: { cart, totalPrice }
+}) => {
+  return { isLoggedIn, userInfo, cart, totalPrice };
 };
 
 export default connect(mapStateToProps)(OrderSummaryScreen);

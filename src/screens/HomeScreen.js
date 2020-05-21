@@ -1,17 +1,33 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
+import { AsyncStorage } from 'react-native';
 import Screen from './Screen';
 import Button from '../components/Button';
-import SmallButton from '../components/SmallButton';
 import logo from '../assets/images/main_logo.jpg';
 
 import { instruction } from '../utils/instruction';
 import { authenticationCheck, authLogout } from '../actions/authenticationActions';
+import { loadCartItems } from '../actions/cartActions';
 
-const HomeScreen = ({ navigation, isLoggedIn, authenticationCheck, userLogout, isLoading }) => {
+const HomeScreen = ({
+  navigation,
+  isLoggedIn,
+  authenticationCheck,
+  userLogout,
+  isLoading,
+  loadCartItems
+}) => {
   useEffect(() => {
     !isLoggedIn && authenticationCheck();
+    loadCartItems();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const cart = await AsyncStorage.getItem('cart');
+      !cart && (await AsyncStorage.setItem('cart', JSON.stringify([])));
+    })();
   }, []);
 
   return (
@@ -22,15 +38,6 @@ const HomeScreen = ({ navigation, isLoggedIn, authenticationCheck, userLogout, i
         </View>
       ) : (
         <View style={styles.container}>
-          <View style={styles.buttonsContainer}>
-            <View style={styles.leftButton}>
-              <SmallButton />
-            </View>
-            <View style={styles.rightButtons}>
-              <SmallButton />
-              <SmallButton />
-            </View>
-          </View>
           <View style={styles.headingView}>
             <Text style={styles.title}>OUR PERSONAL {'\n'}SHOPPING EXPERIENCE</Text>
           </View>
@@ -58,7 +65,6 @@ const HomeScreen = ({ navigation, isLoggedIn, authenticationCheck, userLogout, i
               <Button text={'Log in'} onPress={() => navigation.navigate('Login')} />
             )}
           </View>
-          {/*<Button text={'Test'} onPress={() => navigation.navigate('CartScreen')} />*/}
         </View>
       )}
     </Screen>
@@ -104,23 +110,6 @@ const styles = StyleSheet.create({
     width: '90%',
     justifyContent: 'center',
     marginBottom: 10
-  },
-  buttonsContainer: {
-    flexDirection: 'row',
-    // top: -50,
-    paddingLeft: 10,
-    position: 'relative'
-  },
-  leftButton: {
-    position: 'absolute',
-    left: 10,
-    top: -50
-  },
-  rightButtons: {
-    flexDirection: 'row',
-    position: 'absolute',
-    right: 10,
-    top: -50
   }
 });
 
@@ -131,7 +120,8 @@ const mapStateToProps = ({ authenticationReducer: { isLoggedIn, isLoading } }) =
 const mapDispatchToProps = (dispatch) => {
   return {
     authenticationCheck: () => dispatch(authenticationCheck()),
-    userLogout: () => dispatch(authLogout())
+    userLogout: () => dispatch(authLogout()),
+    loadCartItems: () => dispatch(loadCartItems())
   };
 };
 
