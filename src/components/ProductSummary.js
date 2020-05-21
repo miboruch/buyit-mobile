@@ -5,7 +5,7 @@ import { Text, View, StyleSheet, Image } from 'react-native';
 const ProductSummary = ({ image, name, price }) => {
   return (
     <View style={styles.container}>
-      <Image source={image} style={styles.image} />
+      <Image source={{ uri: image }} style={styles.image} />
       <Text style={styles.name}>{name}</Text>
       <Text style={styles.price}>{price} USD</Text>
     </View>
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100,
-    resizeMode: 'cover',
+    resizeMode: 'cover'
   },
   name: {
     fontFamily: 'Futura',

@@ -10,6 +10,7 @@ const addProductSuccessful = (product) => {
 };
 
 const removeProductSuccessful = (product) => {
+  console.log(product);
   return {
     type: REMOVE_PRODUCT,
     payload: product
@@ -58,13 +59,12 @@ export const removeProduct = (product) => async (dispatch) => {
   const updatedCart = cart.filter((item) => item._id !== product._id);
   await AsyncStorage.setItem('cart', JSON.stringify(updatedCart));
 
-  dispatch(removeProductSuccessful());
+  dispatch(removeProductSuccessful(product));
 };
 
 export const loadCartItems = () => async (dispatch) => {
   const currentCart = await AsyncStorage.getItem('cart');
   const cart = currentCart ? JSON.parse(currentCart) : [];
-  console.log(cart);
 
   dispatch(loadCartItemsSuccessful(cart));
 };
@@ -72,10 +72,10 @@ export const loadCartItems = () => async (dispatch) => {
 export const addProductToCart = (product) => (dispatch) => {
   // socket.emit('productReservation', { productId: product._id });
   dispatch(addProduct(product));
-  console.log(product);
 };
 
 export const removeProductFromCart = (product) => (dispatch) => {
+  console.log(product);
   // socket.emit('productDeleteReservation', { productId: product._id });
   dispatch(removeProduct(product));
 };

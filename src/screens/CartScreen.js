@@ -5,22 +5,30 @@ import Screen from './Screen';
 import ProductSummary from '../components/ProductSummary';
 import iphone from '../assets/images/iphone11.jpg';
 import Button from '../components/Button';
+import { removeProductFromCart } from '../actions/cartActions';
 
-const CartScreen = ({ navigation, cart }) => {
+const CartScreen = ({ navigation, cart, totalPrice, removeProduct }) => {
   return (
     <Screen navigation={navigation} theme={'light'}>
       <ScrollView style={styles.container}>
-        <View style={styles.productsWrapper}>
-          <View style={styles.singleProductWrapper}>
-            <ProductSummary image={iphone} price={1992} name={'Iphone 11'} />
-            <Text style={styles.smallContentText}>
-              Product will be removed from your cart at 19:02
-            </Text>
-            <Button isButtonDark={true} text={'Remove product'} />
+        {cart.map((product) => (
+          <View style={styles.productsWrapper} key={product._id}>
+            <View style={styles.singleProductWrapper}>
+              <ProductSummary image={product.image} price={product.price} name={product.name} />
+              <Text style={styles.smallContentText}>
+                Product will be removed from your cart at{' '}
+                {new Date(product.expire).toLocaleTimeString()}
+              </Text>
+              <Button
+                isButtonDark={true}
+                text={'Remove product'}
+                onPress={() => removeProduct(product)}
+              />
+            </View>
           </View>
-        </View>
+        ))}
         <View style={styles.summaryWrapper}>
-          <Text style={styles.priceContentText}> Total price: 1922 $</Text>
+          <Text style={styles.priceContentText}>Total price: {totalPrice} $</Text>
           <Button isButtonDark={true} text={'Checkout'} />
         </View>
       </ScrollView>
@@ -68,8 +76,14 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ cartReducer: { cart } }) => {
-  return { cart };
+const mapStateToProps = ({ cartReducer: { cart, totalPrice } }) => {
+  return { cart, totalPrice };
 };
 
-export default connect(mapStateToProps)(CartScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeProduct: (product) => dispatch(removeProductFromCart(product))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartScreen);
