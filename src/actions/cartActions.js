@@ -2,24 +2,30 @@ import { ADD_PRODUCT, REMOVE_PRODUCT, LOAD_CART_ITEMS, RESET_CART } from '../red
 // import { socket } from '../utils/constants';
 import { AsyncStorage } from 'react-native';
 
-const addProductSuccessful = (product) => {
+const addProductSuccess = (product) => {
   return {
     type: ADD_PRODUCT,
     payload: product
   };
 };
 
-const removeProductSuccessful = (product) => {
+const removeProductSuccess = (product) => {
   return {
     type: REMOVE_PRODUCT,
     payload: product
   };
 };
 
-const loadCartItemsSuccessful = (cart) => {
+const loadCartItemsSuccess = (cart) => {
   return {
     type: LOAD_CART_ITEMS,
     payload: cart
+  };
+};
+
+const resetCartSuccess = () => {
+  return {
+    type: RESET_CART
   };
 };
 
@@ -35,7 +41,7 @@ const addProduct = (product) => async (dispatch) => {
       await AsyncStorage.setItem('cart', JSON.stringify(cart));
     }
 
-    dispatch(addProductSuccessful({ ...product, expire: time }));
+    dispatch(addProductSuccess({ ...product, expire: time }));
   } catch (error) {
     console.log(error);
   }
@@ -43,9 +49,8 @@ const addProduct = (product) => async (dispatch) => {
 
 export const clearCart = () => async (dispatch) => {
   await AsyncStorage.setItem('cart', JSON.stringify([]));
-  return {
-    type: RESET_CART
-  };
+  dispatch(resetCartSuccess());
+  console.log(await AsyncStorage.getItem('cart'));
 };
 
 export const resetCart = async () => {
@@ -59,14 +64,14 @@ export const removeProduct = (product) => async (dispatch) => {
   const updatedCart = cart.filter((item) => item._id !== product._id);
   await AsyncStorage.setItem('cart', JSON.stringify(updatedCart));
 
-  dispatch(removeProductSuccessful(product));
+  dispatch(removeProductSuccess(product));
 };
 
 export const loadCartItems = () => async (dispatch) => {
   const currentCart = await AsyncStorage.getItem('cart');
   const cart = currentCart ? JSON.parse(currentCart) : [];
 
-  dispatch(loadCartItemsSuccessful(cart));
+  dispatch(loadCartItemsSuccess(cart));
 };
 
 export const addProductToCart = (product) => (dispatch) => {

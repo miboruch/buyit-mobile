@@ -34,10 +34,16 @@ const CartScreen = ({ navigation, cart, totalPrice, removeProduct }) => {
             <Text style={styles.priceContentText}>Your cart is empty</Text>
           </View>
         )}
-        <View style={styles.summaryWrapper}>
-          <Text style={styles.priceContentText}>Total price: {totalPrice} $</Text>
-          <Button isButtonDark={true} text={'Checkout'} />
-        </View>
+        {cart.length !== 0 && (
+          <View style={styles.summaryWrapper}>
+            <Text style={styles.priceContentText}>Total price: {totalPrice} $</Text>
+            <Button
+              isButtonDark={true}
+              text={'Checkout'}
+              onPress={() => navigation.navigate('OrderSummary')}
+            />
+          </View>
+        )}
       </ScrollView>
     </Screen>
   );

@@ -8,7 +8,7 @@ import {
   FETCH_ORDERS_ERROR,
   ORDER_SUCCESS_FINISH
 } from '../reducers/orderReducer';
-import { API_URL } from '../utils/constants';
+import {API_URL} from '../utils/helpers';
 
 const makeOrderStart = () => {
   return {
