@@ -61,7 +61,7 @@ const RegisterScreen = ({ navigation, userRegister }) => {
                     onPress={handleSubmit}
                     isButtonDark={true}
                   />
-                  <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+                  <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                     <Text style={styles.loginText}>or log in</Text>
                   </TouchableOpacity>
                 </View>

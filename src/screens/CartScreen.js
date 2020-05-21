@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import Screen from './Screen';
 import ProductSummary from '../components/ProductSummary';
 import iphone from '../assets/images/iphone11.jpg';
 import Button from '../components/Button';
 
-const CartScreen = ({ navigation }) => {
+const CartScreen = ({ navigation, cart }) => {
   return (
     <Screen navigation={navigation} theme={'light'}>
       <ScrollView style={styles.container}>
@@ -67,4 +68,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CartScreen;
+const mapStateToProps = ({ cartReducer: { cart } }) => {
+  return { cart };
+};
+
+export default connect(mapStateToProps)(CartScreen);

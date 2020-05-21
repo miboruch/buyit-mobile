@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import { connect } from 'react-redux';
 import Screen from './Screen';
 import Button from '../components/Button';
+import { addProductToCart } from '../actions/cartActions';
 
-const ProductScreen = ({ route, navigation }) => {
+const ProductScreen = ({ route, navigation, addProduct }) => {
   const { product } = route.params;
+  console.log(product);
 
   return (
     <Screen navigation={navigation}>
@@ -16,7 +19,7 @@ const ProductScreen = ({ route, navigation }) => {
             <Text style={styles.priceContentText}>{product.price} $</Text>
             <Text style={styles.smallContentText}>{product.category}</Text>
           </View>
-          <Button text={'Add to cart'} onPress={() => navigation.navigate('OrderSummary')} />
+          <Button text={'Add to cart'} onPress={() => addProduct(product)} />
         </View>
       </View>
     </Screen>
@@ -62,4 +65,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ProductScreen;
+const mapStateToProps = ({ cartReducer: { cart } }) => {
+  return { cart };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProduct: (product) => dispatch(addProductToCart(product))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductScreen);

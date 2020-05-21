@@ -1,62 +1,81 @@
 import { ADD_PRODUCT, REMOVE_PRODUCT, LOAD_CART_ITEMS, RESET_CART } from '../reducers/cartReducer';
-import { socket } from '../utils/constants';
+// import { socket } from '../utils/constants';
+import { AsyncStorage } from 'react-native';
 
-const addProduct = product => {
-  let cart;
-  if (localStorage.getItem('cart')) {
-    cart = JSON.parse(localStorage.getItem('cart'));
-    localStorage.removeItem('cart');
-  } else {
-    cart = [];
-  }
-
-  cart.push({ ...product, expire: new Date().getTime() + 15 * 60 * 1000 });
-  localStorage.setItem('cart', JSON.stringify(cart));
-
+const addProductSuccessful = (product) => {
   return {
     type: ADD_PRODUCT,
     payload: product
   };
 };
 
-export const clearCart = () => {
-  localStorage.setItem('cart', JSON.stringify([]));
-  return {
-    type: RESET_CART
-  };
-};
-
-export const resetCart = () => {
-  const currentCart = JSON.parse(localStorage.getItem('cart'));
-  socket.emit('resetCart', { cart: currentCart });
-};
-
-export const removeProduct = product => {
-  const cart = JSON.parse(localStorage.getItem('cart'));
-  const updatedCart = cart.filter(item => item._id !== product._id);
-  localStorage.setItem('cart', JSON.stringify(updatedCart));
-
+const removeProductSuccessful = (product) => {
   return {
     type: REMOVE_PRODUCT,
     payload: product
   };
 };
 
-export const loadCartItems = () => {
-  const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
-
+const loadCartItemsSuccessful = (cart) => {
   return {
     type: LOAD_CART_ITEMS,
     payload: cart
   };
 };
 
-export const addProductToCart = product => dispatch => {
-  socket.emit('productReservation', { productId: product._id });
-  dispatch(addProduct(product));
+const addProduct = (product) => async (dispatch) => {
+  let cart;
+  try {
+    const result = await AsyncStorage.getItem('cart');
+    if (result) {
+      cart = JSON.parse(result);
+      await AsyncStorage.removeItem('cart');
+      cart.push({ ...product, expire: new Date().getTime() + 15 * 60 * 1000 });
+      await AsyncStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    dispatch(addProductSuccessful(product));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const removeProductFromCart = product => dispatch => {
-  socket.emit('productDeleteReservation', { productId: product._id });
+export const clearCart = () => async (dispatch) => {
+  await AsyncStorage.setItem('cart', JSON.stringify([]));
+  return {
+    type: RESET_CART
+  };
+};
+
+export const resetCart = async () => {
+  const currentCart = JSON.parse(await AsyncStorage.getItem('cart'));
+  // socket.emit('resetCart', { cart: currentCart });
+};
+
+export const removeProduct = (product) => async (dispatch) => {
+  const currentCart = await AsyncStorage.getItem('cart');
+  const cart = JSON.parse(currentCart);
+  const updatedCart = cart.filter((item) => item._id !== product._id);
+  await AsyncStorage.setItem('cart', JSON.stringify(updatedCart));
+
+  dispatch(removeProductSuccessful());
+};
+
+export const loadCartItems = () => async (dispatch) => {
+  const currentCart = await AsyncStorage.getItem('cart');
+  const cart = currentCart ? JSON.parse(currentCart) : [];
+  console.log(cart);
+
+  dispatch(loadCartItemsSuccessful(cart));
+};
+
+export const addProductToCart = (product) => (dispatch) => {
+  // socket.emit('productReservation', { productId: product._id });
+  dispatch(addProduct(product));
+  console.log(product);
+};
+
+export const removeProductFromCart = (product) => (dispatch) => {
+  // socket.emit('productDeleteReservation', { productId: product._id });
   dispatch(removeProduct(product));
 };
