@@ -10,7 +10,6 @@ const addProductSuccessful = (product) => {
 };
 
 const removeProductSuccessful = (product) => {
-  console.log(product);
   return {
     type: REMOVE_PRODUCT,
     payload: product
@@ -28,14 +27,15 @@ const addProduct = (product) => async (dispatch) => {
   let cart;
   try {
     const result = await AsyncStorage.getItem('cart');
+    const time = new Date().getTime() + 15 * 60 * 1000;
     if (result) {
       cart = JSON.parse(result);
       await AsyncStorage.removeItem('cart');
-      cart.push({ ...product, expire: new Date().getTime() + 15 * 60 * 1000 });
+      cart.push({ ...product, expire: time });
       await AsyncStorage.setItem('cart', JSON.stringify(cart));
     }
 
-    dispatch(addProductSuccessful(product));
+    dispatch(addProductSuccessful({ ...product, expire: time }));
   } catch (error) {
     console.log(error);
   }
@@ -75,7 +75,6 @@ export const addProductToCart = (product) => (dispatch) => {
 };
 
 export const removeProductFromCart = (product) => (dispatch) => {
-  console.log(product);
   // socket.emit('productDeleteReservation', { productId: product._id });
   dispatch(removeProduct(product));
 };

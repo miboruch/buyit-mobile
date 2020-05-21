@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { AsyncStorage } from 'react-native';
 import Screen from './Screen';
 import Button from '../components/Button';
-import SmallButton from '../components/SmallButton';
 import logo from '../assets/images/main_logo.jpg';
 
 import { instruction } from '../utils/instruction';
@@ -39,15 +38,6 @@ const HomeScreen = ({
         </View>
       ) : (
         <View style={styles.container}>
-          <View style={styles.buttonsContainer}>
-            <View style={styles.leftButton}>
-              <SmallButton />
-            </View>
-            <View style={styles.rightButtons}>
-              <SmallButton />
-              <SmallButton />
-            </View>
-          </View>
           <View style={styles.headingView}>
             <Text style={styles.title}>OUR PERSONAL {'\n'}SHOPPING EXPERIENCE</Text>
           </View>
@@ -75,7 +65,6 @@ const HomeScreen = ({
               <Button text={'Log in'} onPress={() => navigation.navigate('Login')} />
             )}
           </View>
-          {/*<Button text={'Test'} onPress={() => navigation.navigate('CartScreen')} />*/}
         </View>
       )}
     </Screen>
@@ -121,23 +110,6 @@ const styles = StyleSheet.create({
     width: '90%',
     justifyContent: 'center',
     marginBottom: 10
-  },
-  buttonsContainer: {
-    flexDirection: 'row',
-    // top: -50,
-    paddingLeft: 10,
-    position: 'relative'
-  },
-  leftButton: {
-    position: 'absolute',
-    left: 10,
-    top: -50
-  },
-  rightButtons: {
-    flexDirection: 'row',
-    position: 'absolute',
-    right: 10,
-    top: -50
   }
 });
 
