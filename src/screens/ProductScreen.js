@@ -7,6 +7,7 @@ import { addProductToCart } from '../actions/cartActions';
 
 const ProductScreen = ({ route, navigation, addProduct }) => {
   const { product } = route.params;
+  product.reserved = true;
   console.log(product);
 
   return (

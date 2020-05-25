@@ -11,6 +11,9 @@ const ProductsScreen = ({ route, navigation, getAllProducts, isLoading, products
     products.length === 0 && getAllProducts('all', 1);
   }, []);
 
+  if (products.length !== 0) {
+    products[0].reserved = true;
+  }
   return (
     <Screen navigation={navigation} theme={'dark'}>
       {isLoading ? (
@@ -36,6 +39,7 @@ const ProductsScreen = ({ route, navigation, getAllProducts, isLoading, products
                 price={product.price}
                 category={product.category}
                 name={product.name}
+                reserved={product.reserved}
               />
             ))}
           </ScrollView>
