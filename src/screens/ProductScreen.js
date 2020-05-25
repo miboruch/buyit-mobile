@@ -4,11 +4,14 @@ import { connect } from 'react-redux';
 import Screen from './Screen';
 import Button from '../components/Button';
 import { addProductToCart } from '../actions/cartActions';
+import { removeProduct } from '../actions/productActions';
 
-const ProductScreen = ({ route, navigation, addProduct }) => {
+const ProductScreen = ({ route, navigation, addProductToCart, userInfo, removeProduct }) => {
   const { product } = route.params;
   product.reserved = true;
-  console.log(product);
+
+  /* check if the product was added by current logged in user. If yes, add to cart button will not be displayed */
+  const isUserProduct = product.userID === userInfo._id;
 
   return (
     <Screen navigation={navigation}>
@@ -20,7 +23,14 @@ const ProductScreen = ({ route, navigation, addProduct }) => {
             <Text style={styles.priceContentText}>{product.price} $</Text>
             <Text style={styles.smallContentText}>{product.category}</Text>
           </View>
-          <Button text={'Add to cart'} onPress={() => addProduct(product)} />
+          {isUserProduct ? (
+            <Button
+              text={'Remove product'}
+              // onPress={() => removeProduct(userInfo.token, product._id, navigation)}
+            />
+          ) : (
+            <Button text={'Add to cart'} onPress={() => addProductToCart(product)} />
+          )}
         </View>
       </View>
     </Screen>
@@ -66,13 +76,15 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ cartReducer: { cart } }) => {
-  return { cart };
+const mapStateToProps = ({ cartReducer: { cart }, authenticationReducer: { userInfo } }) => {
+  return { cart, userInfo };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addProduct: (product) => dispatch(addProductToCart(product))
+    addProductToCart: (product) => dispatch(addProductToCart(product)),
+    removeProduct: (token, productID, navigation) =>
+      dispatch(removeProduct(token, productID, navigation))
   };
 };
 
