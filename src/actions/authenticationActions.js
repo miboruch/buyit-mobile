@@ -126,9 +126,10 @@ const logout = () => {
   };
 };
 
-export const authLogout = () => async (dispatch) => {
+export const authLogout = (navigation) => async (dispatch) => {
   dispatch(authStart());
 
+  navigation.navigate('Home');
   await removeAuthItems();
   // resetCart();
   dispatch(clearCart());

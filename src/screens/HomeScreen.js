@@ -60,7 +60,7 @@ const HomeScreen = ({
               ))}
             </View>
             {isLoggedIn ? (
-              // <Button text={'Logout'} onPress={() => userLogout()} />
+              // <Button text={'Logout'} onPress={() => userLogout(navigation)} />
               <Button text={'Account'} onPress={() => navigation.navigate('Account')} />
             ) : (
               <Button text={'Log in'} onPress={() => navigation.navigate('Login')} />
@@ -121,7 +121,7 @@ const mapStateToProps = ({ authenticationReducer: { isLoggedIn, isLoading } }) =
 const mapDispatchToProps = (dispatch) => {
   return {
     authenticationCheck: () => dispatch(authenticationCheck()),
-    userLogout: () => dispatch(authLogout()),
+    userLogout: (navigation) => dispatch(authLogout(navigation)),
     loadCartItems: () => dispatch(loadCartItems())
   };
 };
