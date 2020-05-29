@@ -5,6 +5,7 @@ import Screen from './Screen';
 import Button from '../components/Button';
 import { fetchUserOrders } from '../actions/orderActions';
 import { getUserInfo } from '../actions/authenticationActions';
+import { fetchAllUserProducts } from '../actions/productActions';
 
 const AccountScreen = ({
   route,
@@ -15,11 +16,14 @@ const AccountScreen = ({
   isLoading,
   areOrdersLoading,
   userInfo,
-  userOrders
+  userOrders,
+  userProducts,
+  fetchAllUserProducts
 }) => {
   useEffect(() => {
-    fetchOrders(token);
-    fetchUserInfo(token);
+    !userInfo && fetchUserInfo(token);
+    !userOrders && fetchOrders(token);
+    !userProducts && fetchAllUserProducts(token);
   }, []);
   return (
     <Screen navigation={navigation} theme={'light'}>
@@ -31,10 +35,13 @@ const AccountScreen = ({
         <View style={styles.container}>
           <View style={styles.boxContainer}>
             <Text style={styles.largeContentText}>Your account:</Text>
-            <Text style={styles.smallContentText}>login: michalboruch</Text>
-            <Text style={styles.smallContentText}>email: miboruch@gmail.com</Text>
-            <Text style={styles.smallContentText}>created date: 18.12.2019, 12:28</Text>
-            <Text style={styles.smallContentText}>Your products in database: 1</Text>
+            <Text style={styles.smallContentText}>email: {userInfo.email}</Text>
+            <Text style={styles.smallContentText}>
+              created date: {new Date(userInfo.createdDate).toLocaleDateString()}
+            </Text>
+            <Text style={styles.smallContentText}>
+              Your products in database: {userProducts.length}
+            </Text>
             <Text style={styles.smallContentText}>Orders: {userOrders.length}</Text>
             <View style={styles.buttonWrapper}>
               <Button isButtonDark={true} text={'Your orders'} />
@@ -43,11 +50,11 @@ const AccountScreen = ({
           </View>
           <View style={styles.boxContainer}>
             <Text style={styles.largeContentText}>Personal data:</Text>
-            <Text style={styles.smallContentText}>name: Michał</Text>
-            <Text style={styles.smallContentText}>last name: Boruch</Text>
-            <Text style={styles.smallContentText}>address: Pawia 29/3</Text>
-            <Text style={styles.smallContentText}>City: Kraków</Text>
-            <Text style={styles.smallContentText}>Country: Poland</Text>
+            <Text style={styles.smallContentText}>name: {userInfo.name}</Text>
+            <Text style={styles.smallContentText}>last name: {userInfo.lastName}</Text>
+            <Text style={styles.smallContentText}>address: {userInfo.address}</Text>
+            <Text style={styles.smallContentText}>City: {userInfo.city}</Text>
+            <Text style={styles.smallContentText}>Country: {userInfo.country}</Text>
           </View>
           <Button isButtonDark={true} text={'Logout'} />
         </View>
@@ -91,21 +98,24 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = ({
   authenticationReducer: { token, isLoading, userInfo },
-  orderReducer
+  orderReducer,
+  productReducer: { userProducts }
 }) => {
   return {
     token,
     isLoading,
     userInfo,
     areOrdersLoading: orderReducer.isLoading,
-    userOrders: orderReducer.allUserOrders
+    userOrders: orderReducer.allUserOrders,
+    userProducts
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchOrders: (token) => dispatch(fetchUserOrders(token)),
-    fetchUserInfo: (token) => dispatch(getUserInfo(token))
+    fetchUserInfo: (token) => dispatch(getUserInfo(token)),
+    fetchAllUserProducts: (token) => dispatch(fetchAllUserProducts(token))
   };
 };
 
