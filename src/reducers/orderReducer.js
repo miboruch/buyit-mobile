@@ -7,7 +7,7 @@ export const FETCH_ORDERS_SUCCESS = 'FETCH_ORDERS_SUCCESS';
 export const FETCH_ORDERS_ERROR = 'FETCH_ORDERS_ERROR';
 
 const initialState = {
-  loading: false,
+  isLoading: false,
   allUserOrders: [],
   fetchOrderError: null,
   orderSuccess: false,
@@ -19,21 +19,21 @@ export const orderReducer = (state = initialState, action) => {
     case ORDER_START:
       return {
         ...state,
-        loading: true,
+        isLoading: true,
         orderError: null,
         orderSuccess: false
       };
     case ORDER_SUCCESS:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         orderSuccess: true,
         orderError: null
       };
     case ORDER_ERROR:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         orderSuccess: false,
         orderError: action.payload
       };
@@ -45,19 +45,19 @@ export const orderReducer = (state = initialState, action) => {
     case FETCH_ORDERS_START:
       return {
         ...state,
-        loading: true
+        isLoading: true
       };
     case FETCH_ORDERS_SUCCESS:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         fetchOrderError: null,
         allUserOrders: action.payload
       };
     case FETCH_ORDERS_ERROR:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         allUserOrders: [],
         fetchOrderError: action.payload
       };

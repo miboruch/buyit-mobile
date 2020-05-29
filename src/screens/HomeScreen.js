@@ -60,7 +60,8 @@ const HomeScreen = ({
               ))}
             </View>
             {isLoggedIn ? (
-              <Button text={'Logout'} onPress={() => userLogout()} />
+              // <Button text={'Logout'} onPress={() => userLogout()} />
+              <Button text={'Account'} onPress={() => navigation.navigate('Account')} />
             ) : (
               <Button text={'Log in'} onPress={() => navigation.navigate('Login')} />
             )}
