@@ -8,12 +8,8 @@ import { fetchAllProducts } from '../actions/productActions';
 
 const ProductsScreen = ({ route, navigation, getAllProducts, isLoading, products }) => {
   useEffect(() => {
-    products.length === 0 && getAllProducts('all', 1);
+    getAllProducts('all', 1);
   }, []);
-
-  // if (products.length !== 0) {
-  //   products[0].reserved = true;
-  // }
 
   return (
     <Screen navigation={navigation} theme={'dark'}>
@@ -30,11 +26,7 @@ const ProductsScreen = ({ route, navigation, getAllProducts, isLoading, products
           <ScrollView style={styles.scrollView}>
             {products.map((product) => (
               <Product
-                onPress={() =>
-                  navigation.navigate('Product', {
-                    product
-                  })
-                }
+                onPress={() => navigation.navigate('Product', { product })}
                 key={product._id}
                 image={product.image}
                 price={product.price}

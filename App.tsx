@@ -19,13 +19,17 @@ import {
   reserveProduct,
   unreserveProduct
 } from './src/actions/productActions';
-import { clearCart, removeProduct } from './src/actions/cartActions';
+import { clearCart, loadCartItems, removeProduct } from './src/actions/cartActions';
 import { isProductInAsyncStorage } from './src/utils/functions';
+import { authenticationCheck } from './src/actions/authenticationActions';
 
 const Stack = createStackNavigator();
 
 /* screenOptions={{ header: () => null }} */
 const App = ({
+  isLoggedIn,
+  authenticationCheck,
+  loadCartItems,
   addToProducts,
   removeFromProducts,
   removeFromCart,
@@ -33,6 +37,11 @@ const App = ({
   unreserveProduct,
   clearCart
 }) => {
+  useEffect(() => {
+    !isLoggedIn && authenticationCheck();
+    loadCartItems();
+  }, []);
+
   useEffect(() => {
     socket.on('productAdded', ({ addedProduct }) => {
       addToProducts(addedProduct);
@@ -106,8 +115,14 @@ const App = ({
   );
 };
 
+const mapStateToProps = ({ authenticationReducer: { isLoggedIn } }) => {
+  return { isLoggedIn };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
+    authenticationCheck: () => dispatch(authenticationCheck()),
+    loadCartItems: () => dispatch(loadCartItems()),
     addToProducts: (product) => dispatch(addToProducts(product)),
     removeFromProducts: (productID) => dispatch(removeFromProducts(productID)),
     removeFromCart: (product) => dispatch(removeProduct(product)),
@@ -117,4 +132,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

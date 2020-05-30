@@ -8,28 +8,30 @@ import { removeProduct } from '../actions/productActions';
 
 const ProductScreen = ({ route, navigation, addProductToCart, userInfo, removeProduct }) => {
   const { product } = route.params;
-  product.reserved = true;
-
   /* check if the product was added by current logged in user. If yes, add to cart button will not be displayed */
-  const isUserProduct = product.userID === userInfo._id;
+  const isUserProduct = product && userInfo ? product.userID === userInfo._id : false;
 
   return (
     <Screen navigation={navigation}>
       <View style={styles.container}>
         <View style={styles.productWrapper}>
-          <Image style={styles.image} source={{ uri: product.image }} />
-          <View style={styles.contentView}>
-            <Text style={styles.largeContentText}>{product.name}</Text>
-            <Text style={styles.priceContentText}>{product.price} $</Text>
-            <Text style={styles.smallContentText}>{product.category}</Text>
-          </View>
-          {isUserProduct ? (
-            <Button
-              text={'Remove product'}
-              // onPress={() => removeProduct(userInfo.token, product._id, navigation)}
-            />
-          ) : (
-            <Button text={'Add to cart'} onPress={() => addProductToCart(product)} />
+          {product && (
+            <>
+              <Image style={styles.image} source={{ uri: product.image }} />
+              <View style={styles.contentView}>
+                <Text style={styles.largeContentText}>{product.name}</Text>
+                <Text style={styles.priceContentText}>{product.price} $</Text>
+                <Text style={styles.smallContentText}>{product.category}</Text>
+              </View>
+              {isUserProduct ? (
+                <Button
+                  text={'Remove product'}
+                  // onPress={() => removeProduct(userInfo.token, product._id, navigation)}
+                />
+              ) : (
+                <Button text={'Add to cart'} onPress={() => addProductToCart(product)} />
+              )}
+            </>
           )}
         </View>
       </View>
