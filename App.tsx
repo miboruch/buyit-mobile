@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { socket } from './src/utils/helpers';
+import { AsyncStorage } from 'react-native';
 
 import HomeScreen from './src/screens/HomeScreen';
 import ProductsScreen from './src/screens/ProductsScreen';
@@ -38,6 +39,11 @@ const App = ({
   clearCart
 }) => {
   useEffect(() => {
+    (async () => {
+      const cart = await AsyncStorage.getItem('cart');
+      !cart && (await AsyncStorage.setItem('cart', JSON.stringify([])));
+    })();
+
     !isLoggedIn && authenticationCheck();
     loadCartItems();
   }, []);

@@ -1,27 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { AsyncStorage } from 'react-native';
 import Screen from './Screen';
 import Button from '../components/Button';
 import logo from '../assets/images/main_logo.jpg';
 
 import { instruction } from '../utils/instruction';
-import { authenticationCheck } from '../actions/authenticationActions';
-import { loadCartItems } from '../actions/cartActions';
 
-const HomeScreen = ({
-  navigation,
-  isLoggedIn,
-  isLoading,
-}) => {
-  useEffect(() => {
-    (async () => {
-      const cart = await AsyncStorage.getItem('cart');
-      !cart && (await AsyncStorage.setItem('cart', JSON.stringify([])));
-    })();
-  }, []);
-
+const HomeScreen = ({ navigation, isLoggedIn, isLoading }) => {
   return (
     <Screen navigation={navigation} theme='dark'>
       {isLoading ? (
