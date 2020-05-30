@@ -22,8 +22,8 @@ const AccountScreen = ({
 }) => {
   useEffect(() => {
     !userInfo && fetchUserInfo(token);
-    !userOrders && fetchOrders(token);
-    !userProducts && fetchAllUserProducts(token);
+    fetchOrders(token);
+    fetchAllUserProducts(token);
   }, []);
   return (
     <Screen navigation={navigation} theme={'light'}>
@@ -39,14 +39,13 @@ const AccountScreen = ({
                 <Text style={styles.largeContentText}>Your account:</Text>
                 <Text style={styles.smallContentText}>email: {userInfo.email}</Text>
                 <Text style={styles.smallContentText}>
-                  created date: {new Date(userInfo.createdDate).toLocaleDateString()}
+                  created date: {new Date(userInfo.createdDate).toLocaleString()}
                 </Text>
                 <Text style={styles.smallContentText}>
                   Your products in database: {userProducts.length}
                 </Text>
                 <Text style={styles.smallContentText}>Orders: {userOrders.length}</Text>
                 <View style={styles.buttonWrapper}>
-                  <Button isButtonDark={true} text={'Your orders'} />
                   <Button
                     isButtonDark={true}
                     text={'Your products'}

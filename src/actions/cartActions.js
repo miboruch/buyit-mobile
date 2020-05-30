@@ -1,5 +1,5 @@
 import { ADD_PRODUCT, REMOVE_PRODUCT, LOAD_CART_ITEMS, RESET_CART } from '../reducers/cartReducer';
-// import { socket } from '../utils/constants';
+import {socket} from '../utils/helpers';
 import { AsyncStorage } from 'react-native';
 
 const addProductSuccess = (product) => {
@@ -55,7 +55,7 @@ export const clearCart = () => async (dispatch) => {
 
 export const resetCart = async () => {
   const currentCart = JSON.parse(await AsyncStorage.getItem('cart'));
-  // socket.emit('resetCart', { cart: currentCart });
+  socket.emit('resetCart', { cart: currentCart });
 };
 
 export const removeProduct = (product) => async (dispatch) => {
@@ -75,11 +75,11 @@ export const loadCartItems = () => async (dispatch) => {
 };
 
 export const addProductToCart = (product) => (dispatch) => {
-  // socket.emit('productReservation', { productId: product._id });
+  socket.emit('productReservation', { productId: product._id });
   dispatch(addProduct(product));
 };
 
 export const removeProductFromCart = (product) => (dispatch) => {
-  // socket.emit('productDeleteReservation', { productId: product._id });
+  socket.emit('productDeleteReservation', { productId: product._id });
   dispatch(removeProduct(product));
 };
