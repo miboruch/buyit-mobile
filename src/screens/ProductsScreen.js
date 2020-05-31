@@ -20,8 +20,7 @@ const ProductsScreen = ({ route, navigation, getAllProducts, isLoading, products
       ) : (
         <View style={styles.container}>
           <View style={styles.buttonContainer}>
-            <Button text={'Input'} />
-            <Button text={'Add new product'} />
+            <Button text={'Add new product'} onPress={() => navigation.navigate('AddProduct')} />
           </View>
           <ScrollView style={styles.scrollView}>
             {products.map((product) => (

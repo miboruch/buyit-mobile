@@ -110,7 +110,7 @@ export const orderInitialValues = {
   country: ''
 };
 
-export const addProduct = (values, errors) => {
+export const addProductArray = (values, errors) => {
   return [
     {
       name: 'name',
