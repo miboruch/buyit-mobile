@@ -23,6 +23,7 @@ import {
 import { clearCart, loadCartItems, removeProduct } from './src/actions/cartActions';
 import { isProductInAsyncStorage } from './src/utils/functions';
 import { authenticationCheck } from './src/actions/authenticationActions';
+import AddProductScreen from './src/screens/AddProductScreen';
 
 const Stack = createStackNavigator();
 
@@ -116,6 +117,7 @@ const App = ({
         <Stack.Screen name={'OrderSummary'} component={OrderSummaryScreen} />
         <Stack.Screen name={'Cart'} component={CartScreen} />
         <Stack.Screen name={'UserProducts'} component={UserProductsScreen} />
+        <Stack.Screen name={'AddProduct'} component={AddProductScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

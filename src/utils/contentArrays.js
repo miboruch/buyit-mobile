@@ -109,3 +109,26 @@ export const orderInitialValues = {
   city: '',
   country: ''
 };
+
+export const addProduct = (values, errors) => {
+  return [
+    {
+      name: 'name',
+      labelText: errors.name ? errors.name : 'name',
+      inputType: 'text',
+      value: values.name
+    },
+    {
+      name: 'description',
+      labelText: errors.description ? errors.description : 'description',
+      inputType: 'text',
+      value: values.description
+    },
+    {
+      name: 'price',
+      labelText: errors.price ? errors.price : 'price',
+      inputType: 'number',
+      value: values.price
+    }
+  ];
+};
