@@ -27,7 +27,6 @@ import AddProductScreen from './src/screens/AddProductScreen';
 
 const Stack = createStackNavigator();
 
-/* screenOptions={{ header: () => null }} */
 const App = ({
   isLoggedIn,
   authenticationCheck,
@@ -113,11 +112,15 @@ const App = ({
         <Stack.Screen name={'Product'} component={ProductScreen} />
         <Stack.Screen name={'Login'} component={LoginScreen} />
         <Stack.Screen name={'Register'} component={RegisterScreen} />
-        <Stack.Screen name={'Account'} component={AccountScreen} />
         <Stack.Screen name={'OrderSummary'} component={OrderSummaryScreen} />
         <Stack.Screen name={'Cart'} component={CartScreen} />
         <Stack.Screen name={'UserProducts'} component={UserProductsScreen} />
-        <Stack.Screen name={'AddProduct'} component={AddProductScreen} />
+        {isLoggedIn && (
+          <>
+            <Stack.Screen name={'Account'} component={AccountScreen} />
+            <Stack.Screen name={'AddProduct'} component={AddProductScreen} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -6,7 +6,7 @@ import Button from '../components/Button';
 import Product from '../components/Product';
 import { fetchAllProducts } from '../actions/productActions';
 
-const ProductsScreen = ({ route, navigation, getAllProducts, isLoading, products }) => {
+const ProductsScreen = ({ navigation, getAllProducts, isLoading, products, isLoggedIn }) => {
   useEffect(() => {
     getAllProducts('all', 1);
   }, []);
@@ -20,7 +20,7 @@ const ProductsScreen = ({ route, navigation, getAllProducts, isLoading, products
       ) : (
         <View style={styles.container}>
           <View style={styles.buttonContainer}>
-            <Button text={'Add new product'} onPress={() => navigation.navigate('AddProduct')} />
+            {isLoggedIn && <Button text={'Add new product'} onPress={() => navigation.navigate('AddProduct')} />}
           </View>
           <ScrollView style={styles.scrollView}>
             {products.map((product) => (
@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ productReducer: { isLoading, products } }) => {
-  return { isLoading, products };
+const mapStateToProps = ({ authenticationReducer: {isLoggedIn}, productReducer: { isLoading, products } }) => {
+  return { isLoading, products, isLoggedIn };
 };
 
 const mapDispatchToProps = (dispatch) => {

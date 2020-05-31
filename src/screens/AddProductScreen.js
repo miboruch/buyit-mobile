@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-picker';
@@ -9,8 +9,9 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import { addProductArray } from '../utils/contentArrays';
 import { AddProductSchema } from '../utils/schemaValidation';
+import { addProduct } from '../actions/productActions';
 
-const AddProductScreen = ({ navigation }) => {
+const AddProductScreen = ({ navigation, addProduct, token }) => {
   const [image, setImage] = useState(null);
 
   const chooseFile = () => {
@@ -23,17 +24,9 @@ const AddProductScreen = ({ navigation }) => {
     };
 
     ImagePicker.showImagePicker(options, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
-      } else {
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-        setImage({ uri: response.uri });
+      console.log('response', response);
+      if (response.uri) {
+        setImage(response);
       }
     });
   };
@@ -46,8 +39,10 @@ const AddProductScreen = ({ navigation }) => {
           initialValues={{ name: '', description: '', price: null, category: 'all' }}
           onSubmit={({ name, description, price, category }, { resetForm }) => {
             console.log(name, description, price, category);
+            // addProduct(image, name, description, price, category, token);
             resetForm();
             setImage(null);
+            navigation.navigate('Home');
           }}
           validationSchema={AddProductSchema}
         >
@@ -102,11 +97,15 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({
-  authenticationReducer: { isLoggedIn, userInfo },
-  cartReducer: { cart, totalPrice }
-}) => {
-  return { isLoggedIn, userInfo, cart, totalPrice };
+const mapStateToProps = ({ authenticationReducer: { token } }) => {
+  return { token };
 };
 
-export default connect(mapStateToProps)(AddProductScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProduct: (image, name, description, price, category, token) =>
+      dispatch(addProduct(image, name, description, price, category, token))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddProductScreen);
