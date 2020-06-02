@@ -14,9 +14,9 @@ import {
   UNRESERVE_PRODUCT,
   SET_TOTAL_PRODUCTS_COUNTER
 } from '../reducers/productReducer';
-import {API_URL} from '../utils/helpers';
-import {categories} from '../utils/helpers';
-import {getUserInfo} from './authenticationActions';
+import { API_URL } from '../utils/helpers';
+import { categories } from '../utils/helpers';
+import { getUserInfo } from './authenticationActions';
 
 const fetchStart = () => {
   return {
@@ -24,28 +24,28 @@ const fetchStart = () => {
   };
 };
 
-const fetchSuccess = products => {
+const fetchSuccess = (products) => {
   return {
     type: FETCH_SUCCESS,
     payload: products
   };
 };
 
-const fetchSingleSuccess = product => {
+const fetchSingleSuccess = (product) => {
   return {
     type: FETCH_SINGLE_SUCCESS,
     payload: product
   };
 };
 
-const fetchUserProductsSuccess = data => {
+const fetchUserProductsSuccess = (data) => {
   return {
     type: FETCH_USER_PRODUCTS_SUCCESS,
     payload: data
   };
 };
 
-const fetchFailure = error => {
+const fetchFailure = (error) => {
   return {
     type: FETCH_FAILURE,
     payload: {
@@ -60,21 +60,21 @@ const loadStop = () => {
   };
 };
 
-const setProductTotalCounter = totalCounter => {
+const setProductTotalCounter = (totalCounter) => {
   return {
     type: SET_TOTAL_PRODUCTS_COUNTER,
     payload: totalCounter
   };
 };
 
-export const addToProducts = product => {
+export const addToProducts = (product) => {
   return {
     type: ADD_TO_PRODUCTS,
     payload: product
   };
 };
 
-export const removeFromProducts = productId => {
+export const removeFromProducts = (productId) => {
   return {
     type: REMOVE_FROM_PRODUCTS,
     payload: {
@@ -83,21 +83,21 @@ export const removeFromProducts = productId => {
   };
 };
 
-export const reserveProduct = productId => {
+export const reserveProduct = (productId) => {
   return {
     type: RESERVE_PRODUCT,
     payload: productId
   };
 };
 
-export const unreserveProduct = productId => {
+export const unreserveProduct = (productId) => {
   return {
     type: UNRESERVE_PRODUCT,
     payload: productId
   };
 };
 
-const removeFailure = error => {
+const removeFailure = (error) => {
   return {
     type: REMOVE_FAILURE,
     payload: {
@@ -106,14 +106,14 @@ const removeFailure = error => {
   };
 };
 
-export const updateCategory = category => {
+export const updateCategory = (category) => {
   return {
     type: CATEGORY_UPDATE,
     payload: category
   };
 };
 
-export const fetchAllUserProducts = token => async dispatch => {
+export const fetchAllUserProducts = (token) => async (dispatch) => {
   dispatch(fetchStart());
 
   try {
@@ -127,10 +127,10 @@ export const fetchAllUserProducts = token => async dispatch => {
   }
 };
 
-export const fetchAllProducts = (category, page) => async dispatch => {
+export const fetchAllProducts = (category, page) => async (dispatch) => {
   dispatch(fetchStart());
   try {
-    const [currentCategory] = categories.filter(item => category.includes(item));
+    const [currentCategory] = categories.filter((item) => category.includes(item));
 
     if (!currentCategory) {
       return new Error('Wrong category provided');
@@ -148,7 +148,7 @@ export const fetchAllProducts = (category, page) => async dispatch => {
   }
 };
 
-export const fetchSingleProduct = id => async dispatch => {
+export const fetchSingleProduct = (id) => async (dispatch) => {
   dispatch(fetchStart());
   try {
     const { data } = await axios.get(`${API_URL}/product/getSpecificProduct/${id}`);
@@ -159,7 +159,7 @@ export const fetchSingleProduct = id => async dispatch => {
   }
 };
 
-export const searchProductByQuery = query => async dispatch => {
+export const searchProductByQuery = (query) => async (dispatch) => {
   dispatch(fetchStart());
   try {
     const queryResult = query.split(' ').join('_');
@@ -171,8 +171,7 @@ export const searchProductByQuery = query => async dispatch => {
   }
 };
 
-export const removeProduct = (token, productID, history) => async dispatch => {
-  /* history as an argument to change location after the product is being removed */
+export const removeProduct = (token, productID, navigation) => async (dispatch) => {
   try {
     await axios.post(
       `${API_URL}/product/removeProduct`,
@@ -182,13 +181,15 @@ export const removeProduct = (token, productID, history) => async dispatch => {
       }
     );
     dispatch(fetchAllUserProducts(token));
-    history.push('/products/all?page=1');
+    navigation.navigate('Products');
   } catch (error) {
     dispatch(removeFailure(error));
   }
 };
 
-export const addProduct = (image, name, description, price, category, token) => async dispatch => {
+export const addProduct = (image, name, description, price, category, token) => async (
+  dispatch
+) => {
   const formData = new FormData();
   formData.append('image', image);
   formData.append('name', name);

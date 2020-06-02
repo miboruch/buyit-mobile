@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { AntDesign } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 import { SafeAreaView, TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { colors } from '../styles/theme';
-import SmallButton from '../components/SmallButton';
 
-const Screen = ({ navigation, children, theme = 'dark' }) => {
+const Screen = ({ navigation, children, theme = 'dark', isLoggedIn, cart }) => {
   return (
     <View
       style={[styles.container, theme === 'dark' ? styles.darkBackground : styles.lightBackground]}
@@ -13,13 +14,18 @@ const Screen = ({ navigation, children, theme = 'dark' }) => {
         <TouchableOpacity style={styles.absoluteView} onPress={() => navigation.navigate('Home')}>
           <Text style={styles.mainTitle}>buyIT</Text>
         </TouchableOpacity>
-        <View style={styles.leftButton}>
-          <SmallButton isButtonDark={theme !== 'dark'} />
-        </View>
-        <View style={styles.rightButtons}>
-          <SmallButton isButtonDark={theme !== 'dark'} />
-          <SmallButton isButtonDark={theme !== 'dark'} />
-        </View>
+        <TouchableOpacity
+          style={styles.leftButton}
+          onPress={() => {
+            isLoggedIn ? navigation.navigate('Account') : navigation.navigate('Login');
+          }}
+        >
+          <AntDesign name='user' size={35} color={theme === 'dark' ? '#ccc' : '#2d2d2d'} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.rightButtons} onPress={() => navigation.navigate('Cart')}>
+          {cart.length !== 0 && <Text style={styles.text}>{cart.length}</Text>}
+          <AntDesign name='shoppingcart' size={35} color={theme === 'dark' ? '#ccc' : '#2d2d2d'} />
+        </TouchableOpacity>
         <View style={styles.childrenWrapper} />
         {children}
       </SafeAreaView>
@@ -64,18 +70,23 @@ const styles = StyleSheet.create({
   leftButton: {
     position: 'absolute',
     left: 10,
-    top: 5,
+    top: 10,
     zIndex: 2
   },
   rightButtons: {
     flexDirection: 'row',
     position: 'absolute',
-    right: 10,
-    top: 5,
-    zIndex: 2
+    right: 15,
+    top: 12,
+    zIndex: 2,
+    alignItems: 'center'
   },
   childrenWrapper: {
     marginBottom: 60
+  },
+  text: {
+    color: '#fff',
+    fontSize: 15
   }
 });
 
@@ -84,4 +95,8 @@ Screen.propTypes = {
   theme: PropTypes.oneOf(['light', 'dark'])
 };
 
-export default Screen;
+const mapStateToProps = ({ authenticationReducer: { isLoggedIn }, cartReducer: { cart } }) => {
+  return { isLoggedIn, cart };
+};
+
+export default connect(mapStateToProps)(Screen);

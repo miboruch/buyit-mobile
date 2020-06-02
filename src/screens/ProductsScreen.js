@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import Screen from './Screen';
 import Button from '../components/Button';
 import Product from '../components/Product';
 import { fetchAllProducts } from '../actions/productActions';
 
-const ProductsScreen = ({ route, navigation, getAllProducts, isLoading, products }) => {
+const ProductsScreen = ({ navigation, getAllProducts, isLoading, products, isLoggedIn }) => {
   useEffect(() => {
-    products.length === 0 && getAllProducts('all', 1);
+    getAllProducts('all', 1);
   }, []);
 
   return (
@@ -20,26 +20,23 @@ const ProductsScreen = ({ route, navigation, getAllProducts, isLoading, products
       ) : (
         <View style={styles.container}>
           <View style={styles.buttonContainer}>
-            <Button text={'Input'} />
-            <Button text={'Add new product'} />
+            {isLoggedIn && (
+              <Button text={'Add new product'} onPress={() => navigation.navigate('AddProduct')} />
+            )}
           </View>
           <ScrollView style={styles.scrollView}>
             {products.map((product) => (
               <Product
-                onPress={() =>
-                  navigation.navigate('Product', {
-                    product
-                  })
-                }
+                onPress={() => navigation.navigate('Product', { product })}
                 key={product._id}
                 image={product.image}
                 price={product.price}
                 category={product.category}
                 name={product.name}
+                reserved={product.reserved}
               />
             ))}
           </ScrollView>
-          <Button text={'Cart'} onPress={() => navigation.navigate('Cart')} />
         </View>
       )}
     </Screen>
@@ -69,8 +66,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ productReducer: { isLoading, products } }) => {
-  return { isLoading, products };
+const mapStateToProps = ({
+  authenticationReducer: { isLoggedIn },
+  productReducer: { isLoading, products }
+}) => {
+  return { isLoading, products, isLoggedIn };
 };
 
 const mapDispatchToProps = (dispatch) => {

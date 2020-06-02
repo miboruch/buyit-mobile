@@ -1,35 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { AsyncStorage } from 'react-native';
 import Screen from './Screen';
 import Button from '../components/Button';
 import logo from '../assets/images/main_logo.jpg';
 
 import { instruction } from '../utils/instruction';
-import { authenticationCheck, authLogout } from '../actions/authenticationActions';
-import { loadCartItems } from '../actions/cartActions';
 
-const HomeScreen = ({
-  navigation,
-  isLoggedIn,
-  authenticationCheck,
-  userLogout,
-  isLoading,
-  loadCartItems
-}) => {
-  useEffect(() => {
-    !isLoggedIn && authenticationCheck();
-    loadCartItems();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      const cart = await AsyncStorage.getItem('cart');
-      !cart && (await AsyncStorage.setItem('cart', JSON.stringify([])));
-    })();
-  }, []);
-
+const HomeScreen = ({ navigation, isLoggedIn, isLoading }) => {
   return (
     <Screen navigation={navigation} theme='dark'>
       {isLoading ? (
@@ -60,7 +38,8 @@ const HomeScreen = ({
               ))}
             </View>
             {isLoggedIn ? (
-              <Button text={'Logout'} onPress={() => userLogout()} />
+              // <Button text={'Logout'} onPress={() => userLogout(navigation)} />
+              <Button text={'Account'} onPress={() => navigation.navigate('Account')} />
             ) : (
               <Button text={'Log in'} onPress={() => navigation.navigate('Login')} />
             )}
@@ -117,12 +96,4 @@ const mapStateToProps = ({ authenticationReducer: { isLoggedIn, isLoading } }) =
   return { isLoggedIn, isLoading };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    authenticationCheck: () => dispatch(authenticationCheck()),
-    userLogout: () => dispatch(authLogout()),
-    loadCartItems: () => dispatch(loadCartItems())
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(mapStateToProps)(HomeScreen);

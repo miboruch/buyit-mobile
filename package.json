@@ -9,6 +9,7 @@
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=8081'"
   },
   "dependencies": {
+    "@expo/vector-icons": "^10.2.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.4.4",
     "@react-navigation/native": "^5.2.6",
@@ -24,10 +25,10 @@
     "react-native": "~0.61.5",
     "react-native-elements": "^2.0.0",
     "react-native-gesture-handler": "^1.6.1",
+    "react-native-image-picker": "^2.3.1",
     "react-native-reanimated": "^1.7.1",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.2.0",
-    "react-native-svg": "^12.1.0",
     "react-native-unimodules": "~0.9.0",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.3.8",
@@ -36,6 +37,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "yup": "^0.28.5"
   },
   "devDependencies": {
@@ -51,6 +53,7 @@
     "eslint-plugin-react-native": "^3.8.1",
     "jest-expo": "~37.0.0",
     "prettier": "^2.0.5",
+    "react-native-svg-transformer": "^0.14.3",
     "typescript": "~3.8.3"
   },
   "jest": {

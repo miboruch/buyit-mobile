@@ -10,8 +10,17 @@ import { orderSummaryArray } from '../utils/contentArrays';
 import Button from '../components/Button';
 import CountrySelect from '../components/CountrySelect';
 import { orderInitialValues } from '../utils/contentArrays';
+import { createOrderWithAccount, createOrderWithoutAccount } from '../actions/orderActions';
 
-const OrderSummaryScreen = ({ navigation, isLoggedIn, userInfo, cart, totalPrice }) => {
+const OrderSummaryScreen = ({
+  navigation,
+  isLoggedIn,
+  userInfo,
+  cart,
+  totalPrice,
+  createOrderWithAccount,
+  createOrderWithoutAccount
+}) => {
   const [isEditable, setEditable] = useState(false);
   const orderSummaryValues = isLoggedIn
     ? {
@@ -52,8 +61,27 @@ const OrderSummaryScreen = ({ navigation, isLoggedIn, userInfo, cart, totalPrice
             <Formik
               initialValues={orderSummaryValues}
               onSubmit={(values, { resetForm }) => {
-                console.log(values);
+                isLoggedIn && userInfo
+                  ? createOrderWithAccount(
+                      cart,
+                      totalPrice,
+                      userInfo._id,
+                      values.address,
+                      values.city,
+                      values.country
+                    )
+                  : createOrderWithoutAccount(
+                      cart,
+                      totalPrice,
+                      values.name,
+                      values.lastName,
+                      values.email,
+                      values.address,
+                      values.city,
+                      values.country
+                    );
                 resetForm();
+                navigation.navigate('Home');
               }}
               validationSchema={OrderSummarySchema}
             >
@@ -141,4 +169,15 @@ const mapStateToProps = ({
   return { isLoggedIn, userInfo, cart, totalPrice };
 };
 
-export default connect(mapStateToProps)(OrderSummaryScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createOrderWithAccount: (cart, totalPrice, userID, address, city, country) =>
+      dispatch(createOrderWithAccount(cart, totalPrice, userID, address, city, country)),
+    createOrderWithoutAccount: (cart, totalPrice, name, lastName, email, address, city, country) =>
+      dispatch(
+        createOrderWithoutAccount(cart, totalPrice, name, lastName, email, address, city, country)
+      )
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderSummaryScreen);

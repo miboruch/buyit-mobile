@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const Button = ({ onPress, text, isButtonDark }) => {
+const Button = ({ onPress, text, isButtonDark, disabled }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.container, isButtonDark ? styles.darkContainer : styles.lightContainer]}
+      disabled={disabled}
+      style={[styles.container, isButtonDark ? styles.darkContainer : styles.lightContainer, disabled ? styles.disabled : null]}
     >
       <Text style={[styles.text, isButtonDark ? styles.darkThemeText : styles.lightThemeText]}>
         {text}
@@ -40,17 +41,22 @@ const styles = StyleSheet.create({
   },
   darkThemeText: {
     color: '#2d2d2d'
+  },
+  disabled: {
+    opacity: 0.5
   }
 });
 
 Button.propTypes = {
   onPress: PropTypes.func,
   text: PropTypes.string.isRequired,
-  isButtonDark: PropTypes.bool
+  isButtonDark: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 Button.defaultProps = {
-  isButtonDark: false
+  isButtonDark: false,
+  disabled: false
 };
 
 export default Button;
