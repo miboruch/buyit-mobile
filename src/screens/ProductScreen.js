@@ -1,15 +1,51 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, AsyncStorage, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import Screen from './Screen';
 import Button from '../components/Button';
 import { addProductToCart } from '../actions/cartActions';
 import { removeProduct } from '../actions/productActions';
 
-const ProductScreen = ({ route, navigation, addProductToCart, userInfo, removeProduct }) => {
+const ProductScreen = ({ route, navigation, addProductToCart, userInfo, cart, removeProduct }) => {
+  const [isAlreadyInCart, setIsInCart] = useState(false);
   const { product } = route.params;
+
   /* check if the product was added by current logged in user. If yes, add to cart button will not be displayed */
   const isUserProduct = product && userInfo ? product.userID === userInfo._id : false;
+
+  const getAsyncStorageData = async () => {
+    return JSON.parse(await AsyncStorage.getItem('cart'));
+  };
+
+  useEffect(() => {
+    (async () => {
+      setIsInCart(
+        cart !== []
+          ? cart.filter((item) => item._id === product._id)
+          : await getAsyncStorageData().filter((item) => item._id === product._id)
+      );
+    })();
+  }, [cart]);
+
+  const deleteAlert = () =>
+    Alert.alert(
+      'Remove product',
+      `Do you really want to delete ${product.name}?`,
+      [
+        {
+          text: 'Yes',
+          onPress: () => removeProduct(userInfo.token, product._id, navigation)
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        }
+      ],
+      {
+        cancelable: true
+      }
+    );
+  // removeProduct(userInfo.token, product._id, navigation)
 
   return (
     <Screen navigation={navigation}>
@@ -24,12 +60,15 @@ const ProductScreen = ({ route, navigation, addProductToCart, userInfo, removePr
                 <Text style={styles.smallContentText}>{product.category}</Text>
               </View>
               {isUserProduct ? (
-                <Button
-                  text={'Remove product'}
-                  // onPress={() => removeProduct(userInfo.token, product._id, navigation)}
-                />
+                <Button text={'Remove product'} onPress={deleteAlert} />
               ) : (
-                <Button text={'Add to cart'} onPress={() => addProductToCart(product)} />
+                <View>
+                  {isAlreadyInCart.length !== 0 ? (
+                    <Text style={styles.text}>You already have this product in cart</Text>
+                  ) : (
+                    <Button text={'Add to cart'} onPress={() => addProductToCart(product)} />
+                  )}
+                </View>
               )}
             </>
           )}
@@ -75,6 +114,15 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '80%'
+  },
+  userProduct: {
+    display: 'none'
+  },
+  text: {
+    fontSize: 14,
+    fontFamily: 'Futura',
+    textAlign: 'center',
+    color: '#fff'
   }
 });
 
