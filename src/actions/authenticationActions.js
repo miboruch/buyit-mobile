@@ -14,8 +14,8 @@ import {
 import { API_URL } from '../utils/helpers';
 import { clearCart } from './cartActions';
 // import { resetCart } from './cartAction';
-// import { fetchUserOrders } from './orderAction';
-// import { fetchAllUserProducts } from './productAction';
+import { fetchUserOrders } from './orderActions';
+import { fetchAllUserProducts } from './productActions';
 
 const setAuthItems = async (userID, token) => {
   try {
@@ -188,8 +188,8 @@ export const authenticationCheck = () => async (dispatch) => {
   if (userID && token) {
     dispatch(authSuccess(token, userID));
     dispatch(getUserInfo(token));
-    // dispatch(fetchUserOrders(token));
-    // dispatch(fetchAllUserProducts(token));
+    dispatch(fetchUserOrders(token));
+    dispatch(fetchAllUserProducts(token));
   }
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import Screen from './Screen';
 import Button from '../components/Button';
@@ -20,7 +20,9 @@ const ProductsScreen = ({ navigation, getAllProducts, isLoading, products, isLog
       ) : (
         <View style={styles.container}>
           <View style={styles.buttonContainer}>
-            {isLoggedIn && <Button text={'Add new product'} onPress={() => navigation.navigate('AddProduct')} />}
+            {isLoggedIn && (
+              <Button text={'Add new product'} onPress={() => navigation.navigate('AddProduct')} />
+            )}
           </View>
           <ScrollView style={styles.scrollView}>
             {products.map((product) => (
@@ -35,7 +37,6 @@ const ProductsScreen = ({ navigation, getAllProducts, isLoading, products, isLog
               />
             ))}
           </ScrollView>
-          <Button text={'Cart'} onPress={() => navigation.navigate('Cart')} />
         </View>
       )}
     </Screen>
@@ -65,7 +66,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ authenticationReducer: {isLoggedIn}, productReducer: { isLoading, products } }) => {
+const mapStateToProps = ({
+  authenticationReducer: { isLoggedIn },
+  productReducer: { isLoading, products }
+}) => {
   return { isLoading, products, isLoggedIn };
 };
 

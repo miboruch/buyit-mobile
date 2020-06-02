@@ -1,7 +1,6 @@
 export const ORDER_START = 'ORDER_START';
 export const ORDER_SUCCESS = 'ORDER_SUCCESS';
 export const ORDER_ERROR = 'ORDER_ERROR';
-export const ORDER_SUCCESS_FINISH = 'ORDER_SUCCESS_FINISH';
 export const FETCH_ORDERS_START = 'FETCH_ORDERS_START';
 export const FETCH_ORDERS_SUCCESS = 'FETCH_ORDERS_SUCCESS';
 export const FETCH_ORDERS_ERROR = 'FETCH_ORDERS_ERROR';
@@ -36,11 +35,6 @@ export const orderReducer = (state = initialState, action) => {
         isLoading: false,
         orderSuccess: false,
         orderError: action.payload
-      };
-    case ORDER_SUCCESS_FINISH:
-      return {
-        ...state,
-        orderSuccess: false
       };
     case FETCH_ORDERS_START:
       return {

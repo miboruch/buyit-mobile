@@ -5,8 +5,7 @@ import {
   ORDER_ERROR,
   FETCH_ORDERS_START,
   FETCH_ORDERS_SUCCESS,
-  FETCH_ORDERS_ERROR,
-  ORDER_SUCCESS_FINISH
+  FETCH_ORDERS_ERROR
 } from '../reducers/orderReducer';
 import { API_URL } from '../utils/helpers';
 
