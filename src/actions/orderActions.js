@@ -8,7 +8,7 @@ import {
   FETCH_ORDERS_ERROR,
   ORDER_SUCCESS_FINISH
 } from '../reducers/orderReducer';
-import {API_URL} from '../utils/helpers';
+import { API_URL } from '../utils/helpers';
 
 const makeOrderStart = () => {
   return {
@@ -22,7 +22,7 @@ const makeOrderSuccess = () => {
   };
 };
 
-const makeOrderError = error => {
+const makeOrderError = (error) => {
   return {
     type: ORDER_ERROR,
     payload: error
@@ -35,23 +35,17 @@ const fetchOrdersStart = () => {
   };
 };
 
-const fetchOrdersSuccess = result => {
+const fetchOrdersSuccess = (result) => {
   return {
     type: FETCH_ORDERS_SUCCESS,
     payload: result
   };
 };
 
-const fetchOrdersError = error => {
+const fetchOrdersError = (error) => {
   return {
     type: FETCH_ORDERS_ERROR,
     payload: error
-  };
-};
-
-export const orderSuccessFinish = () => {
-  return {
-    type: ORDER_SUCCESS_FINISH
   };
 };
 
@@ -64,7 +58,7 @@ export const createOrderWithoutAccount = (
   address,
   city,
   country
-) => dispatch => {
+) => (dispatch) => {
   dispatch(makeOrderStart());
   try {
     axios.post(`${API_URL}/order/createOrder`, {
@@ -83,14 +77,9 @@ export const createOrderWithoutAccount = (
   }
 };
 
-export const createOrderWithAccount = (
-  cart,
-  totalPrice,
-  userID,
-  address,
-  city,
-  country
-) => dispatch => {
+export const createOrderWithAccount = (cart, totalPrice, userID, address, city, country) => (
+  dispatch
+) => {
   dispatch(makeOrderStart());
   try {
     axios.post(`${API_URL}/order/createOrder`, {
@@ -107,7 +96,7 @@ export const createOrderWithAccount = (
   }
 };
 
-export const fetchUserOrders = token => async dispatch => {
+export const fetchUserOrders = (token) => async (dispatch) => {
   dispatch(fetchOrdersStart());
   try {
     const { data } = await axios.get(`${API_URL}/order/getUserOrders`, {

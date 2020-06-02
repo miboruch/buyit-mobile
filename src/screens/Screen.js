@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { SafeAreaView, TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { colors } from '../styles/theme';
 
-const Screen = ({ navigation, children, theme = 'dark', isLoggedIn }) => {
+const Screen = ({ navigation, children, theme = 'dark', isLoggedIn, cart }) => {
   return (
     <View
       style={[styles.container, theme === 'dark' ? styles.darkBackground : styles.lightBackground]}
@@ -23,6 +23,7 @@ const Screen = ({ navigation, children, theme = 'dark', isLoggedIn }) => {
           <AntDesign name='user' size={35} color={theme === 'dark' ? '#ccc' : '#2d2d2d'} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.rightButtons} onPress={() => navigation.navigate('Cart')}>
+          {cart.length !== 0 && <Text style={styles.text}>{cart.length}</Text>}
           <AntDesign name='shoppingcart' size={35} color={theme === 'dark' ? '#ccc' : '#2d2d2d'} />
         </TouchableOpacity>
         <View style={styles.childrenWrapper} />
@@ -77,10 +78,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 15,
     top: 12,
-    zIndex: 2
+    zIndex: 2,
+    alignItems: 'center'
   },
   childrenWrapper: {
     marginBottom: 60
+  },
+  text: {
+    color: '#fff',
+    fontSize: 15
   }
 });
 
@@ -89,8 +95,8 @@ Screen.propTypes = {
   theme: PropTypes.oneOf(['light', 'dark'])
 };
 
-const mapStateToProps = ({ authenticationReducer: { isLoggedIn } }) => {
-  return { isLoggedIn };
+const mapStateToProps = ({ authenticationReducer: { isLoggedIn }, cartReducer: { cart } }) => {
+  return { isLoggedIn, cart };
 };
 
 export default connect(mapStateToProps)(Screen);
