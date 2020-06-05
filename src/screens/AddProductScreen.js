@@ -24,7 +24,6 @@ const AddProductScreen = ({ navigation, addProduct, token }) => {
     };
 
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('response', response);
       if (response.uri) {
         setImage(response);
       }

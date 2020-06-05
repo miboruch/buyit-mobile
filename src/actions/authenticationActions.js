@@ -13,7 +13,6 @@ import {
 } from '../reducers/authenticationReducer';
 import { API_URL } from '../utils/helpers';
 import { clearCart } from './cartActions';
-// import { resetCart } from './cartAction';
 import { fetchUserOrders } from './orderActions';
 import { fetchAllUserProducts } from './productActions';
 
@@ -131,7 +130,6 @@ export const authLogout = (navigation) => async (dispatch) => {
 
   navigation.navigate('Home');
   await removeAuthItems();
-  // resetCart();
   dispatch(clearCart());
   dispatch(logout());
 };
