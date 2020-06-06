@@ -50,7 +50,6 @@ const addProduct = product => async dispatch => {
 export const clearCart = () => async dispatch => {
   await AsyncStorage.setItem('cart', JSON.stringify([]));
   dispatch(resetCartSuccess());
-  console.log(await AsyncStorage.getItem('cart'));
 };
 
 export const resetCart = async () => {

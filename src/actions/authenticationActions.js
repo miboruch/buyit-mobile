@@ -190,21 +190,3 @@ export const authenticationCheck = () => async dispatch => {
     dispatch(fetchAllUserProducts(token));
   }
 };
-
-export const userUpdate = (name, lastName, city, address, country, token) => async dispatch => {
-  dispatch(authStart());
-  try {
-    await axios.put(
-      `${API_URL}/user/update`,
-      { name, lastName, city, address, country },
-      {
-        headers: { 'auth-token': token }
-      }
-    );
-
-    dispatch(updateSuccess());
-    dispatch(getUserInfo(token));
-  } catch (error) {
-    dispatch(updateFailure(error));
-  }
-};

@@ -31,13 +31,6 @@ const fetchSuccess = products => {
   };
 };
 
-const fetchSingleSuccess = product => {
-  return {
-    type: FETCH_SINGLE_SUCCESS,
-    payload: product
-  };
-};
-
 const fetchUserProductsSuccess = data => {
   return {
     type: FETCH_USER_PRODUCTS_SUCCESS,
@@ -143,29 +136,6 @@ export const fetchAllProducts = (category, page) => async dispatch => {
 
     dispatch(fetchSuccess(data.products));
     dispatch(setProductTotalCounter(data.productsLength));
-  } catch (error) {
-    dispatch(fetchFailure(error));
-  }
-};
-
-export const fetchSingleProduct = id => async dispatch => {
-  dispatch(fetchStart());
-  try {
-    const { data } = await axios.get(`${API_URL}/product/getSpecificProduct/${id}`);
-
-    dispatch(fetchSingleSuccess(data));
-  } catch (error) {
-    dispatch(fetchFailure(error));
-  }
-};
-
-export const searchProductByQuery = query => async dispatch => {
-  dispatch(fetchStart());
-  try {
-    const queryResult = query.split(' ').join('_');
-
-    const { data } = await axios.get(`${API_URL}/product/search/${queryResult}`);
-    dispatch(fetchSuccess(data));
   } catch (error) {
     dispatch(fetchFailure(error));
   }
